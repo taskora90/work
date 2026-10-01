@@ -1,1 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Tasks - Taskora</title>
 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #635bff;
+      --primary-dark: #5148e8;
+      --secondary: #8b5cf6;
+      --dark: #111827;
+      --text: #374151;
+      --muted: #6b7280;
+      --light: #f5f7fb;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.07);
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 4px 10px 28px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(99, 91, 255, 0.25);
+    }
+
+    .brand-name {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .menu-title {
+      padding: 8px 12px;
+      margin-bottom: 7px;
+      color: #9ca3af;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 13px;
+      border-radius: 11px;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav-item:hover {
+      background: #f4f3ff;
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: #eeedff;
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .sidebar-bottom {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* MAIN */
+    .main {
+      margin-left: 250px;
+      min-height: 100vh;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      height: 76px;
+      background: rgba(255,255,255,0.92);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      backdrop-filter: blur(12px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      border: none;
+      background: #f3f4f6;
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .topbar-title {
+      font-size: 20px;
+      font-weight: 750;
+      color: var(--dark);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .notification {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: #f8f8ff;
+      border: 1px solid #ecebff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 18px;
+    }
+
+    .notification-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      position: absolute;
+      right: 9px;
+      top: 8px;
+      border: 2px solid white;
+    }
+
+    .profile-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 6px;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #635bff, #8b5cf6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .profile-info strong {
+      display: block;
+      font-size: 13px;
+      color: var(--dark);
+    }
+
+    .profile-info span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* CONTENT */
+    .content {
+      padding: 32px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .heading-text h1 {
+      font-size: 30px;
+      color: var(--dark);
+      margin-bottom: 7px;
+      letter-spacing: -0.6px;
+    }
+
+    .heading-text p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .balance-small {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 11px 16px;
+      min-width: 145px;
+    }
+
+    .balance-small span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+
+    .balance-small strong {
+      color: var(--dark);
+      font-size: 17px;
+    }
+
+    /* FILTER */
+    .filter-box {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: 1fr 190px 160px;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box span {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 17px;
+    }
+
+    .search-box input,
+    .filter-select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      outline: none;
+      background: #fafafa;
+      color: var(--text);
+      padding: 0 13px;
+    }
+
+    .search-box input {
+      padding-left: 40px;
+    }
+
+    .search-box input:focus,
+    .filter-select:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(99,91,255,0.08);
+    }
+
+    /* CATEGORY */
+    .categories {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .category-btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--muted);
+      padding: 9px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .category-btn:hover {
+      color: var(--primary);
+      border-color: #c9c6ff;
+      background: #f7f6ff;
+    }
+
+    .category-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* TASK HEADER */
+    .tasks-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .tasks-header h2 {
+      font-size: 18px;
+      color: var(--dark);
+    }
+
+    .task-count {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* TASK GRID */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .task-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 7px 22px rgba(17,24,39,0.045);
+      transition: 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .task-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 32px rgba(17,24,39,0.09);
+      border-color: #d9d7ff;
+    }
+
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .task-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: #f0efff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .task-reward {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--success);
+      white-space: nowrap;
+    }
+
+    .task-card h3 {
+      color: var(--dark);
+      font-size: 16px;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .task-description {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      min-height: 40px;
+      margin-bottom: 17px;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+
+    .meta-tag {
+      background: #f8fafc;
+      border: 1px solid #eef0f3;
+      color: #6b7280;
+      border-radius: 7px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .task-bottom {
+      border-top: 1px solid #f0f1f4;
+      padding-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .task-deadline {
+      color: #9ca3af;
+      font-size: 11px;
+    }
+
+    .task-btn {
+      border: none;
+      background: var(--primary);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .task-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .featured-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 0 0 0 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    /* EMPTY */
+    .empty-state {
+      display: none;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 55px 20px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .empty-icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .empty-state h3 {
+      color: var(--dark);
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* OVERLAY */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17,24,39,0.4);
+      z-index: 950;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .task-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-row {
+        grid-template-columns: 1fr 180px;
+      }
+
+      .filter-row .filter-select:last-child {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: 0.25s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.show {
+        display: block;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .content {
+        padding: 24px 18px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .balance-small {
+        width: 100%;
+      }
+
+      .filter-row {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-row .filter-select:last-child {
+        display: block;
+      }
+
+      .task-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-info {
+        display: none;
+      }
+
+      .topbar-title {
+        font-size: 17px;
+      }
+
+      .heading-text h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">T</div>
+      <div class="brand-name">Taskora</div>
+    </div>
+
+    <div class="menu-title">Main Menu</div>
+
+    <nav class="nav-menu">
+
+      <a href="dashboard.html" class="nav-item">
+        <span class="nav-icon">⌂</span>
+        Dashboard
+      </a>
+
+      <a href="tasks.html" class="nav-item active">
+        <span class="nav-icon">▦</span>
+        Available Tasks
+      </a>
+
+      <a href="my-tasks.html" class="nav-item">
+        <span class="nav-icon">✓</span>
+        My Tasks
+      </a>
+
+      <a href="wallet.html" class="nav-item">
+        <span class="nav-icon">◈</span>
+        Wallet
+      </a>
+
+      <a href="withdraw.html" class="nav-item">
+        <span class="nav-icon">↗</span>
+        Withdraw
+      </a>
+
+      <a href="referral.html" class="nav-item">
+        <span class="nav-icon">♧</span>
+        Referral
+      </a>
+
+      <a href="profile.html" class="nav-item">
+        <span class="nav-icon">◉</span>
+        Profile
+      </a>
+
+      <a href="support.html" class="nav-item">
+        <span class="nav-icon">?</span>
+        Support
+      </a>
+
+      <a href="about.html" class="nav-item">
+        <span class="nav-icon">ⓘ</span>
+        About
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">↩</span>
+        Back to Home
+      </a>
+
+      <a href="login.html" class="nav-item">
+        <span class="nav-icon">⇥</span>
+        Logout
+      </a>
+    </div>
+
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+      <div class="topbar-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        <div class="topbar-title">Available Tasks</div>
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="notification">
+          ♢
+          <span class="notification-dot"></span>
+        </div>
+
+        <div class="profile-mini">
+          <div class="profile-avatar">TU</div>
+
+          <div class="profile-info">
+            <strong>Taskora User</strong>
+            <span>Member</span>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content">
+
+      <div class="page-heading">
+
+        <div class="heading-text">
+          <h1>Available Tasks</h1>
+          <p>Explore available tasks and choose the ones that match your skills.</p>
+        </div>
+
+        <div class="balance-small">
+          <span>Available Balance</span>
+          <strong>$128.50</strong>
+        </div>
+
+      </div>
+
+      <!-- FILTER -->
+      <div class="filter-box">
+
+        <div class="filter-row">
+
+          <div class="search-box">
+            <span>⌕</span>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search tasks..."
+            >
+          </div>
+
+          <select class="filter-select" id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="content">Content</option>
+            <option value="data">Data</option>
+            <option value="review">Review</option>
+            <option value="research">Research</option>
+            <option value="client">Client</option>
+          </select>
+
+          <select class="filter-select" id="rewardFilter">
+            <option value="all">Any Reward</option>
+            <option value="low">Under $10</option>
+            <option value="medium">$10 - $20</option>
+            <option value="high">$20+</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- CATEGORIES -->
+      <div class="categories">
+
+        <button class="category-btn active" data-category="all">
+          All Tasks
+        </button>
+
+        <button class="category-btn" data-category="content">
+          Content
+        </button>
+
+        <button class="category-btn" data-category="data">
+          Data
+        </button>
+
+        <button class="category-btn" data-category="review">
+          Review
+        </button>
+
+        <button class="category-btn" data-category="research">
+          Research
+        </button>
+
+        <button class="category-btn" data-category="client">
+          Client
+        </button>
+
+      </div>
+
+      <!-- TASK HEADER -->
+      <div class="tasks-header">
+
+        <h2>Tasks for you</h2>
+
+        <span class="task-count" id="taskCount">
+          9 tasks available
+        </span>
+
+      </div>
+
+      <!-- TASK GRID -->
+      <div class="task-grid" id="taskGrid">
+
+        <!-- TASK 1 -->
+        <article
+          class="task-card"
+          data-category="content"
+          data-reward="8"
+          data-title="Website Content Review"
+        >
+
+          <div class="featured-label">Featured</div>
+
+          <div class="task-top">
+            <div class="task-icon">✎</div>
+            <div class="task-reward">+$8.00</div>
+          </div>
+
+          <h3>Website Content Review</h3>
+
+          <p class="task-description">
+            Review short website content and identify basic quality issues.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Content</span>
+            <span class="meta-tag">10–15 min</span>
+            <span class="meta-tag">Beginner</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 2 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 2 -->
+        <article
+          class="task-card"
+          data-category="data"
+          data-reward="12.50"
+          data-title="Story Classification"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">▤</div>
+            <div class="task-reward">+$12.50</div>
+          </div>
+
+          <h3>Story Classification</h3>
+
+          <p class="task-description">
+            Read short stories and classify them according to provided categories.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Data</span>
+            <span class="meta-tag">20 min</span>
+            <span class="meta-tag">Intermediate</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 3 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 3 -->
+        <article
+          class="task-card"
+          data-category="client"
+          data-reward="6.75"
+          data-title="Client Data Check"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">♙</div>
+            <div class="task-reward">+$6.75</div>
+          </div>
+
+          <h3>Client Data Check</h3>
+
+          <p class="task-description">
+            Check basic client information and identify missing or incorrect fields.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Client</span>
+            <span class="meta-tag">10 min</span>
+            <span class="meta-tag">Beginner</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 1 day</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 4 -->
+        <article
+          class="task-card"
+          data-category="review"
+          data-reward="15"
+          data-title="Product Information Review"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">◌</div>
+            <div class="task-reward">+$15.00</div>
+          </div>
+
+          <h3>Product Information Review</h3>
+
+          <p class="task-description">
+            Review product descriptions and check whether required information is present.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Review</span>
+            <span class="meta-tag">25 min</span>
+            <span class="meta-tag">Intermediate</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 4 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 5 -->
+        <article
+          class="task-card"
+          data-category="research"
+          data-reward="22"
+          data-title="Online Research Task"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">⌕</div>
+            <div class="task-reward">+$22.00</div>
+          </div>
+
+          <h3>Online Research Task</h3>
+
+          <p class="task-description">
+            Collect specific publicly available information following task instructions.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Research</span>
+            <span class="meta-tag">35 min</span>
+            <span class="meta-tag">Advanced</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 5 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 6 -->
+        <article
+          class="task-card"
+          data-category="content"
+          data-reward="9.50"
+          data-title="Short Description Writing"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">✦</div>
+            <div class="task-reward">+$9.50</div>
+          </div>
+
+          <h3>Short Description Writing</h3>
+
+          <p class="task-description">
+            Create clear and concise descriptions using the provided information.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Content</span>
+            <span class="meta-tag">15 min</span>
+            <span class="meta-tag">Beginner</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 2 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 7 -->
+        <article
+          class="task-card"
+          data-category="data"
+          data-reward="18"
+          data-title="Data Organization"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">▦</div>
+            <div class="task-reward">+$18.00</div>
+          </div>
+
+          <h3>Data Organization</h3>
+
+          <p class="task-description">
+            Organize a provided set of information according to the given structure.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Data</span>
+            <span class="meta-tag">30 min</span>
+            <span class="meta-tag">Intermediate</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 3 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 8 -->
+        <article
+          class="task-card"
+          data-category="review"
+          data-reward="11"
+          data-title="Quality Check Task"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">✓</div>
+            <div class="task-reward">+$11.00</div>
+          </div>
+
+          <h3>Quality Check Task</h3>
+
+          <p class="task-description">
+            Check submitted information against a simple quality checklist.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Review</span>
+            <span class="meta-tag">20 min</span>
+            <span class="meta-tag">Beginner</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 2 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+        <!-- TASK 9 -->
+        <article
+          class="task-card"
+          data-category="client"
+          data-reward="25"
+          data-title="Client Handling Research"
+        >
+
+          <div class="task-top">
+            <div class="task-icon">♧</div>
+            <div class="task-reward">+$25.00</div>
+          </div>
+
+          <h3>Client Handling Research</h3>
+
+          <p class="task-description">
+            Review client-related information and prepare a structured summary.
+          </p>
+
+          <div class="task-meta">
+            <span class="meta-tag">Client</span>
+            <span class="meta-tag">40 min</span>
+            <span class="meta-tag">Advanced</span>
+          </div>
+
+          <div class="task-bottom">
+            <span class="task-deadline">Deadline: 5 days</span>
+            <a href="task-details.html" class="task-btn">View Task</a>
+          </div>
+
+        </article>
+
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">⌕</div>
+        <h3>No tasks found</h3>
+        <p>Try changing your search or category filter.</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const rewardFilter = document.getElementById("rewardFilter");
+    const taskGrid = document.getElementById("taskGrid");
+    const taskCount = document.getElementById("taskCount");
+    const emptyState = document.getElementById("emptyState");
+
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const taskCards = document.querySelectorAll(".task-card");
+
+    function filterTasks() {
+
+      const searchValue = searchInput.value.toLowerCase().trim();
+      const selectedCategory = categoryFilter.value;
+      const selectedReward = rewardFilter.value;
+
+      let visibleCount = 0;
+
+      taskCards.forEach(card => {
+
+        const title = card.dataset.title.toLowerCase();
+        const category = card.dataset.category;
+        const reward = parseFloat(card.dataset.reward);
+
+        const matchesSearch =
+          title.includes(searchValue);
+
+        const matchesCategory =
+          selectedCategory === "all" ||
+          category === selectedCategory;
+
+        let matchesReward = true;
+
+        if (selectedReward === "low") {
+          matchesReward = reward < 10;
+        }
+
+        if (selectedReward === "medium") {
+          matchesReward = reward >= 10 && reward <= 20;
+        }
+
+        if (selectedReward === "high") {
+          matchesReward = reward > 20;
+        }
+
+        if (
+          matchesSearch &&
+          matchesCategory &&
+          matchesReward
+        ) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+
+      });
+
+      taskCount.textContent =
+        visibleCount + (visibleCount === 1 ? " task available" : " tasks available");
+
+      if (visibleCount === 0) {
+        emptyState.style.display = "block";
+      } else {
+        emptyState.style.display = "none";
+      }
+    }
+
+    searchInput.addEventListener("input", filterTasks);
+
+    categoryFilter.addEventListener("change", function() {
+
+      categoryButtons.forEach(btn => {
+        btn.classList.remove("active");
+
+        if (btn.dataset.category === categoryFilter.value) {
+          btn.classList.add("active");
+        }
+      });
+
+      filterTasks();
+    });
+
+    rewardFilter.addEventListener("change", filterTasks);
+
+    categoryButtons.forEach(button => {
+
+      button.addEventListener("click", function() {
+
+        categoryButtons.forEach(btn => {
+          btn.classList.remove("active");
+        });
+
+        this.classList.add("active");
+
+        categoryFilter.value = this.dataset.category;
+
+        filterTasks();
+      });
+
+    });
+
+    /* MOBILE SIDEBAR */
+
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+
+    mobileMenuBtn.addEventListener("click", function() {
+      sidebar.classList.add("open");
+      overlay.classList.add("show");
+    });
+
+    overlay.addEventListener("click", function() {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    });
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+
+      item.addEventListener("click", function() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("show");
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
