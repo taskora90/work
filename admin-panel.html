@@ -2704,5 +2704,27 @@ tr:last-child td{
 
   console.log("Firestore connected:", db);
   </script>
+  <script type="module">
+
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    query,
+    orderBy,
+    limit
+  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+  import {
+    getApp
+  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+
+  const app = getApp();
+
+  const db = getFirestore(app);
+
+
+  </script>
 </body>
 </html>
