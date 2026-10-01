@@ -1,1 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Taskora - Work, Complete Tasks & Earn</title>
+
+  <meta
+    name="description"
+    content="Taskora is a modern task and earning platform where users can complete tasks, build skills and manage their earnings."
+  >
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #635bff;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --dark: #111827;
+      --text: #374151;
+      --muted: #6b7280;
+      --light: #f8f9ff;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --shadow: 0 15px 45px rgba(31, 41, 55, 0.08);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 19px;
+      font-weight: 800;
+      background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+      );
+      box-shadow: 0 8px 22px rgba(99, 91, 255, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover {
+      background: #f3f4ff;
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .login-btn {
+      padding: 10px 17px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    .login-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .register-btn {
+      padding: 11px 18px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--dark);
+      transition: 0.25s;
+    }
+
+    .register-btn:hover {
+      transform: translateY(-1px);
+      background: var(--primary);
+    }
+
+    .menu-btn {
+      display: none;
+      border: none;
+      background: #f3f4ff;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 95px 0 85px;
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(99, 91, 255, 0.13),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(139, 92, 246, 0.12),
+          transparent 32%
+        ),
+        linear-gradient(
+          180deg,
+          #ffffff 0%,
+          #f8f9ff 100%
+        );
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 65px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      margin-bottom: 22px;
+      border-radius: 30px;
+      color: var(--primary);
+      background: #f0efff;
+      border: 1px solid #dfdcff;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-badge span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+    }
+
+    .hero h1 {
+      max-width: 650px;
+      color: var(--dark);
+      font-size: clamp(42px, 5vw, 68px);
+      line-height: 1.05;
+      letter-spacing: -2.8px;
+      margin-bottom: 23px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text {
+      max-width: 590px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 750;
+      transition: 0.25s;
+    }
+
+    .primary-btn {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 10px 25px rgba(99, 91, 255, 0.22);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      background: var(--primary-dark);
+    }
+
+    .secondary-btn {
+      color: var(--dark);
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .secondary-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Hero visual */
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .dashboard-card {
+      position: relative;
+      padding: 23px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      box-shadow: 0 30px 80px rgba(31, 41, 55, 0.12);
+      overflow: hidden;
+    }
+
+    .dashboard-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -100px;
+      top: -100px;
+      border-radius: 50%;
+      background: rgba(99, 91, 255, 0.09);
+    }
+
+    .dashboard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+
+    .dashboard-title {
+      font-size: 14px;
+      font-weight: 750;
+      color: var(--dark);
+    }
+
+    .online {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--success);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .online i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .balance-box {
+      padding: 22px;
+      border-radius: 17px;
+      color: white;
+      background: linear-gradient(
+        135deg,
+        #24204d,
+        #635bff
+      );
+      margin-bottom: 17px;
+    }
+
+    .balance-label {
+      opacity: 0.75;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .balance-value {
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .balance-bottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 11px;
+      opacity: 0.78;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .mini-stat {
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: white;
+    }
+
+    .mini-stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .mini-stat-value {
+      color: var(--dark);
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .floating-card {
+      position: absolute;
+      padding: 13px 15px;
+      border-radius: 14px;
+      background: white;
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 45px rgba(31, 41, 55, 0.12);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .floating-card.one {
+      left: -32px;
+      top: 85px;
+    }
+
+    .floating-card.two {
+      right: -28px;
+      bottom: 80px;
+    }
+
+    .floating-icon {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #f0efff;
+      color: var(--primary);
+      margin-right: 7px;
+    }
+
+    /* =========================
+       TRUST STRIP
+    ========================= */
+
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: white;
+    }
+
+    .trust-content {
+      min-height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 45px;
+      color: #8a8f9d;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .trust-content span {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    /* =========================
+       SECTION COMMON
+    ========================= */
+
+    .section {
+      padding: 90px 0;
+    }
+
+    .section-header {
+      max-width: 680px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .section-label {
+      display: inline-block;
+      margin-bottom: 11px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+    }
+
+    .section-header h2 {
+      color: var(--dark);
+      font-size: clamp(30px, 4vw, 43px);
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      margin-bottom: 15px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features {
+      background: #fbfbfe;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: white;
+      transition: 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: #dcd9ff;
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      margin-bottom: 19px;
+      color: var(--primary);
+      background: #f0efff;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .feature-card h3 {
+      color: var(--dark);
+      font-size: 18px;
+      margin-bottom: 9px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    /* =========================
+       HOW IT WORKS
+    ========================= */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      position: relative;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: white;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      border-radius: 11px;
+      color: white;
+      background: var(--dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .step h3 {
+      color: var(--dark);
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats-section {
+      padding: 30px 0;
+    }
+
+    .stats-box {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow: hidden;
+      border-radius: 20px;
+      background: var(--dark);
+    }
+
+    .stat {
+      padding: 30px 20px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat h3 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .stat p {
+      color: #aeb4c1;
+      font-size: 12px;
+    }
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta-section {
+      padding: 85px 0;
+      background: #fbfbfe;
+    }
+
+    .cta-box {
+      position: relative;
+      overflow: hidden;
+      padding: 58px 45px;
+      border-radius: 25px;
+      text-align: center;
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(255,255,255,0.13),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #17152e,
+          #4f46b8
+        );
+    }
+
+    .cta-box h2 {
+      position: relative;
+      color: white;
+      font-size: clamp(29px, 4vw, 42px);
+      letter-spacing: -1.3px;
+      margin-bottom: 13px;
+    }
+
+    .cta-box p {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto 27px;
+      color: #d9d9e8;
+      font-size: 14px;
+    }
+
+    .cta-box .primary-btn {
+      position: relative;
+      background: white;
+      color: var(--primary);
+      box-shadow: none;
+    }
+
+    .cta-box .primary-btn:hover {
+      background: #f4f3ff;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 48px 0 25px;
+      background: #0d1117;
+      color: white;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 35px;
+      padding-bottom: 35px;
+    }
+
+    .footer-brand p {
+      max-width: 350px;
+      margin-top: 13px;
+      color: #9ca3af;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .footer-title {
+      margin-bottom: 15px;
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .footer-links a {
+      color: #9ca3af;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      padding-top: 22px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      color: #6b7280;
+      font-size: 11px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 950px) {
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-text {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        max-width: 600px;
+        width: 100%;
+        margin: auto;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+
+      .navbar {
+        min-height: 68px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+      }
+
+      .nav-actions .login-btn {
+        display: none;
+      }
+
+      .register-btn {
+        padding: 9px 13px;
+        font-size: 12px;
+      }
+
+      .hero {
+        padding: 65px 0 60px;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+        letter-spacing: -1.8px;
+      }
+
+      .hero-text {
+        font-size: 14px;
+      }
+
+      .dashboard-card {
+        padding: 17px;
+      }
+
+      .floating-card.one {
+        left: -8px;
+        top: 55px;
+      }
+
+      .floating-card.two {
+        right: -8px;
+        bottom: 45px;
+      }
+
+      .trust-content {
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 18px 0;
+      }
+
+      .trust-content span:nth-child(3),
+      .trust-content span:nth-child(4) {
+        display: none;
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .feature-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-box {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .stat:nth-child(2) {
+        border-right: none;
+      }
+
+      .stat:nth-child(3),
+      .stat:nth-child(4) {
+        border-bottom: none;
+      }
+
+      .cta-box {
+        padding: 45px 22px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 420px) {
+
+      .hero h1 {
+        font-size: 37px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .primary-btn,
+      .secondary-btn {
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header>
+    <div class="container navbar">
+
+      <a href="index.html" class="logo">
+        <span class="logo-icon">T</span>
+        <span>Taskora</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="about.html">About</a>
+        <a href="support.html">Support</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="login.html" class="login-btn">Login</a>
+        <a href="register.html" class="register-btn">Create Account</a>
+        <button class="menu-btn" id="menuBtn">☰</button>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <main>
+
+    <section class="hero">
+
+      <div class="container hero-grid">
+
+        <div class="hero-content">
+
+          <div class="hero-badge">
+            <span></span>
+            A smarter way to work online
+          </div>
+
+          <h1>
+            Complete tasks.
+            <span>Build skills.</span>
+            Earn.
+          </h1>
+
+          <p class="hero-text">
+            Welcome to Taskora — a modern platform where you can
+            discover available tasks, complete meaningful work,
+            build your skills and manage your earnings from one place.
+          </p>
+
+          <div class="hero-buttons">
+
+            <a href="register.html" class="primary-btn">
+              Get Started
+            </a>
+
+            <a href="tasks.html" class="secondary-btn">
+              Explore Tasks
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="hero-visual">
+
+          <div class="floating-card one">
+            <span class="floating-icon">✓</span>
+            Task Completed
+          </div>
+
+          <div class="dashboard-card">
+
+            <div class="dashboard-top">
+              <div class="dashboard-title">
+                Your Overview
+              </div>
+
+              <div class="online">
+                <i></i>
+                Active
+              </div>
+            </div>
+
+            <div class="balance-box">
+
+              <div class="balance-label">
+                Available Balance
+              </div>
+
+              <div class="balance-value">
+                $128.50
+              </div>
+
+              <div class="balance-bottom">
+                <span>Total Earnings</span>
+                <span>$384.75</span>
+              </div>
+
+            </div>
+
+            <div class="mini-stats">
+
+              <div class="mini-stat">
+                <div class="mini-stat-label">
+                  Completed Tasks
+                </div>
+
+                <div class="mini-stat-value">
+                  48
+                </div>
+              </div>
+
+              <div class="mini-stat">
+                <div class="mini-stat-label">
+                  Pending Tasks
+                </div>
+
+                <div class="mini-stat-value">
+                  06
+                </div>
+              </div>
+
+              <div class="mini-stat">
+                <div class="mini-stat-label">
+                  This Month
+                </div>
+
+                <div class="mini-stat-value">
+                  $96.20
+                </div>
+              </div>
+
+              <div class="mini-stat">
+                <div class="mini-stat-label">
+                  Referral Bonus
+                </div>
+
+                <div class="mini-stat-value">
+                  $22.50
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="floating-card two">
+            <span class="floating-icon">↗</span>
+            New earning added
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TRUST STRIP
+    ========================== -->
+
+    <section class="trust-strip">
+
+      <div class="container trust-content">
+
+        <span>✓ Secure Platform</span>
+        <span>✓ Simple Workflow</span>
+        <span>✓ Task Management</span>
+        <span>✓ Transparent Balance</span>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================== -->
+
+    <section class="section features">
+
+      <div class="container">
+
+        <div class="section-header">
+
+          <span class="section-label">
+            Platform Features
+          </span>
+
+          <h2>
+            Everything you need in one platform
+          </h2>
+
+          <p>
+            Taskora brings your tasks, earnings, wallet,
+            referrals and account management together.
+          </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              ✓
+            </div>
+
+            <h3>
+              Available Tasks
+            </h3>
+
+            <p>
+              Explore available tasks and choose opportunities
+              that match your skills and interests.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              $
+            </div>
+
+            <h3>
+              Earnings & Wallet
+            </h3>
+
+            <p>
+              Keep track of completed-task earnings,
+              available balance and transaction history.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              ↗
+            </div>
+
+            <h3>
+              Referral Program
+            </h3>
+
+            <p>
+              Invite others through your referral system
+              and monitor your referral activity.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              ◉
+            </div>
+
+            <h3>
+              Personal Dashboard
+            </h3>
+
+            <p>
+              View your account activity, task progress,
+              earnings and important account information.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              →
+            </div>
+
+            <h3>
+              Simple Withdrawals
+            </h3>
+
+            <p>
+              Manage withdrawal requests and view your
+              transaction status from one dedicated page.
+            </p>
+
+          </div>
+
+
+          <div class="feature-card">
+
+            <div class="feature-icon">
+              ?
+            </div>
+
+            <h3>
+              Support
+            </h3>
+
+            <p>
+              Get help with your account, tasks,
+              payments and other platform-related questions.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-header">
+
+          <span class="section-label">
+            How It Works
+          </span>
+
+          <h2>
+            Start your journey in four simple steps
+          </h2>
+
+          <p>
+            A simple workflow designed to keep your experience
+            clear and easy to understand.
+          </p>
+
+        </div>
+
+
+        <div class="steps">
+
+          <div class="step">
+
+            <div class="step-number">
+              01
+            </div>
+
+            <h3>
+              Create Account
+            </h3>
+
+            <p>
+              Register your account and complete your basic profile.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              02
+            </div>
+
+            <h3>
+              Find Tasks
+            </h3>
+
+            <p>
+              Browse available opportunities from the task section.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              03
+            </div>
+
+            <h3>
+              Complete Work
+            </h3>
+
+            <p>
+              Follow the task instructions and submit your work.
+            </p>
+
+          </div>
+
+
+          <div class="step">
+
+            <div class="step-number">
+              04
+            </div>
+
+            <h3>
+              Track Earnings
+            </h3>
+
+            <p>
+              Monitor approved earnings through your wallet.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         STATS
+    ========================== -->
+
+    <section class="stats-section">
+
+      <div class="container">
+
+        <div class="stats-box">
+
+          <div class="stat">
+            <h3>24/7</h3>
+            <p>Platform Access</p>
+          </div>
+
+          <div class="stat">
+            <h3>6+</h3>
+            <p>Core Sections</p>
+          </div>
+
+          <div class="stat">
+            <h3>1</h3>
+            <p>Unified Dashboard</p>
+          </div>
+
+          <div class="stat">
+            <h3>∞</h3>
+            <p>Growth Potential</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================== -->
+
+    <section class="cta-section">
+
+      <div class="container">
+
+        <div class="cta-box">
+
+          <h2>
+            Ready to get started?
+          </h2>
+
+          <p>
+            Create your Taskora account and explore the platform.
+            Your journey starts with your first task.
+          </p>
+
+          <a href="register.html" class="primary-btn">
+            Create Your Account
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+
+          <div class="logo">
+            <span class="logo-icon">T</span>
+            <span style="color:white;">Taskora</span>
+          </div>
+
+          <p>
+            A modern task and earning platform designed to
+            connect users with online work opportunities,
+            task management and account tools.
+          </p>
+
+        </div>
+
+
+        <div>
+
+          <div class="footer-title">
+            Platform
+          </div>
+
+          <div class="footer-links">
+            <a href="tasks.html">Available Tasks</a>
+            <a href="my-tasks.html">My Tasks</a>
+            <a href="wallet.html">Wallet</a>
+            <a href="withdraw.html">Withdraw</a>
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <div class="footer-title">
+            Account
+          </div>
+
+          <div class="footer-links">
+            <a href="login.html">Login</a>
+            <a href="register.html">Create Account</a>
+            <a href="profile.html">Profile</a>
+            <a href="referral.html">Referral</a>
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <div class="footer-title">
+            Company
+          </div>
+
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="support.html">Support</a>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="footer-bottom">
+
+        <span>
+          © 2026 Taskora. All Rights Reserved.
+        </span>
+
+        <span>
+          Built for a better online work experience.
+        </span>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       MOBILE MENU
+  ========================== -->
+
+  <script>
+
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", function () {
+
+      const nav = document.querySelector(".nav-links");
+
+      if (nav.style.display === "flex") {
+
+        nav.style.display = "none";
+
+      } else {
+
+        nav.style.display = "flex";
+        nav.style.position = "absolute";
+        nav.style.top = "68px";
+        nav.style.left = "4%";
+        nav.style.right = "4%";
+        nav.style.padding = "12px";
+        nav.style.flexDirection = "column";
+        nav.style.alignItems = "stretch";
+        nav.style.background = "white";
+        nav.style.border = "1px solid #e5e7eb";
+        nav.style.borderRadius = "14px";
+        nav.style.boxShadow = "0 15px 40px rgba(0,0,0,0.08)";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
