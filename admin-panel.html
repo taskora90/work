@@ -2723,7 +2723,78 @@ tr:last-child td{
   const app = getApp();
 
   const db = getFirestore(app);
+const recentUsersBody =
+  document.getElementById("recentUsersBody");
 
+async function loadRecentUsers() {
+
+  try {
+
+    const usersRef = collection(db, "users");
+
+    const q = query(
+      usersRef,
+      orderBy("createdAt", "desc"),
+      limit(5)
+    );
+
+    const snapshot = await getDocs(q);
+
+    recentUsersBody.innerHTML = "";
+
+    snapshot.forEach((doc) => {
+
+      const user = doc.data();
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>
+          <strong>
+            ${user.name || "Unknown User"}
+          </strong>
+          <span>
+            ${user.email || ""}
+          </span>
+        </td>
+
+        <td>
+          ${user.createdAt
+            ? user.createdAt.toDate().toLocaleDateString()
+            : "Recently"}
+        </td>
+
+        <td>
+          <span class="status active">
+            Active
+          </span>
+        </td>
+      `;
+
+      recentUsersBody.appendChild(row);
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Error loading recent users:",
+      error
+    );
+
+    recentUsersBody.innerHTML = `
+      <tr>
+        <td colspan="3">
+          Unable to load users
+        </td>
+      </tr>
+    `;
+
+  }
+
+}
+
+loadRecentUsers();
 
   </script>
 </body>
