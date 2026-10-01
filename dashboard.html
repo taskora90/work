@@ -1714,13 +1714,10 @@
   import { auth, db } from "./firebase-config.js";
 
   import {
-    onAuthStateChanged
+    onAuthStateChanged,
+    signOut
   } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import {
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-  
+
   import {
     doc,
     getDoc
@@ -1734,65 +1731,114 @@ import {
       return;
     }
 
-
     try {
 
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-
 
       if (!userSnap.exists()) {
         console.log("User profile not found.");
         return;
       }
 
-
       const userData = userSnap.data();
 
-
       console.log("Firebase User Data:", userData);
-      document.getElementById("userName").textContent =
-  userData.fullName || user.displayName || "Taskora User";
-document.getElementById("balanceValue").textContent =
-  "$" + Number(userData.balance || 0).toFixed(2);
 
-document.getElementById("completedTasksValue").textContent =
-  userData.completedTasks || 0;
 
-document.getElementById("totalEarningsValue").textContent =
-  "$" + Number(userData.totalEarnings || 0).toFixed(2);
+      const userName = document.getElementById("userName");
+      if (userName) {
+        userName.textContent =
+          userData.fullName ||
+          user.displayName ||
+          "Taskora User";
+      }
 
-document.getElementById("referralEarningsValue").textContent =
-  "$" + Number(userData.referralEarnings || 0).toFixed(2);
 
-    
+      const balanceValue =
+        document.getElementById("balanceValue");
+
+      if (balanceValue) {
+        balanceValue.textContent =
+          "$" + Number(userData.balance || 0).toFixed(2);
+      }
+
+
+      const completedTasksValue =
+        document.getElementById("completedTasksValue");
+
+      if (completedTasksValue) {
+        completedTasksValue.textContent =
+          userData.completedTasks || 0;
+      }
+
+
+      const totalEarningsValue =
+        document.getElementById("totalEarningsValue");
+
+      if (totalEarningsValue) {
+        totalEarningsValue.textContent =
+          "$" + Number(userData.totalEarnings || 0).toFixed(2);
+      }
+
+
+      const referralEarningsValue =
+        document.getElementById("referralEarningsValue");
+
+      if (referralEarningsValue) {
+        referralEarningsValue.textContent =
+          "$" + Number(userData.referralEarnings || 0).toFixed(2);
+      }
 
     } catch (error) {
 
-      console.error("Dashboard data error:", error);
+      console.error(
+        "Dashboard data error:",
+        error
+      );
 
     }
 
   });
-document.getElementById("logoutBtn").addEventListener("click", async function (e) {
 
-  e.preventDefault();
 
-  try {
+  const logoutBtn =
+    document.getElementById("logoutBtn");
 
-    await signOut(auth);
 
-    window.location.href = "login.html";
+  if (logoutBtn) {
 
-  } catch (error) {
+    logoutBtn.addEventListener(
+      "click",
+      async function (e) {
 
-    console.error("Logout error:", error);
+        e.preventDefault();
 
-    alert("Logout failed. Please try again.");
+        try {
+
+          await signOut(auth);
+
+          window.location.href =
+            "login.html";
+
+        } catch (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+          alert(
+            "Logout failed. Please try again."
+          );
+
+        }
+
+      }
+    );
 
   }
 
-});
 </script>
 </body>
 </html>
