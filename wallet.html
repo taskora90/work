@@ -1,1 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet - Taskora</title>
 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #111827;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 100vh;
+      background: #ffffff;
+      border-right: 1px solid #e5e7eb;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 22px;
+      border-bottom: 1px solid #f0f1f4;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #635bff, #8b5cf6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 800;
+      box-shadow: 0 7px 18px rgba(99, 91, 255, 0.25);
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .nav {
+      padding: 18px 12px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .nav-section {
+      margin: 16px 12px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #9ca3af;
+      font-weight: 700;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 11px 13px;
+      margin: 3px 0;
+      border-radius: 11px;
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .nav-link:hover {
+      background: #f5f4ff;
+      color: #635bff;
+    }
+
+    .nav-link.active {
+      background: #eeecff;
+      color: #635bff;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .sidebar-bottom {
+      padding: 14px 12px 18px;
+      border-top: 1px solid #f0f1f4;
+    }
+
+    /* TOPBAR */
+
+    .main {
+      margin-left: 250px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 76px;
+      background: rgba(255,255,255,0.96);
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: #f3f4f6;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .topbar-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .notification {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      background: #f5f7fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: #4b5563;
+      cursor: pointer;
+    }
+
+    .notification-dot {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      top: 9px;
+      right: 9px;
+      border: 2px solid white;
+    }
+
+    .profile-mini {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #635bff, #8b5cf6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .profile-info {
+      line-height: 1.25;
+    }
+
+    .profile-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .profile-role {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    /* CONTENT */
+
+    .content {
+      padding: 30px;
+      max-width: 1500px;
+      margin: auto;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 25px;
+      gap: 20px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+
+    .page-subtitle {
+      color: #6b7280;
+      margin-top: 7px;
+      font-size: 14px;
+    }
+
+    .header-balance {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 13px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-balance span {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .header-balance strong {
+      font-size: 16px;
+      color: #111827;
+    }
+
+    /* BALANCE HERO */
+
+    .balance-card {
+      background: linear-gradient(135deg, #635bff 0%, #5148e8 55%, #8b5cf6 100%);
+      border-radius: 22px;
+      padding: 30px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(99, 91, 255, 0.20);
+      margin-bottom: 24px;
+    }
+
+    .balance-card::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 45px solid rgba(255,255,255,0.06);
+      right: -80px;
+      top: -130px;
+    }
+
+    .balance-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 35px solid rgba(255,255,255,0.05);
+      left: 45%;
+      bottom: -130px;
+    }
+
+    .balance-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .balance-label {
+      font-size: 13px;
+      opacity: 0.82;
+      margin-bottom: 9px;
+    }
+
+    .balance-amount {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+    }
+
+    .balance-note {
+      font-size: 12px;
+      opacity: 0.75;
+      margin-top: 7px;
+    }
+
+    .balance-actions {
+      margin-top: 25px;
+      display: flex;
+      gap: 11px;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      background: white;
+      color: #5148e8;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 13px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-white:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 18px rgba(0,0,0,0.12);
+    }
+
+    .btn-outline-white {
+      background: rgba(255,255,255,0.10);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* STAT CARDS */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 17px;
+      padding: 21px;
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 17px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+    .stat-icon {
+      width: 37px;
+      height: 37px;
+      border-radius: 10px;
+      background: #f0efff;
+      color: #635bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    .stat-value {
+      font-size: 25px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .stat-description {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    /* MAIN GRID */
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 20px 21px;
+      border-bottom: 1px solid #f0f1f4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .card-subtitle {
+      color: #9ca3af;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 9px;
+    }
+
+    .filter-select {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      border-radius: 9px;
+      padding: 8px 11px;
+      font-size: 12px;
+      color: #4b5563;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* TRANSACTIONS */
+
+    .transaction-list {
+      padding: 0 21px;
+    }
+
+    .transaction {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 18px 0;
+      border-bottom: 1px solid #f0f1f4;
+    }
+
+    .transaction:last-child {
+      border-bottom: none;
+    }
+
+    .transaction-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 0;
+    }
+
+    .transaction-icon {
+      width: 41px;
+      height: 41px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .transaction-icon.income {
+      background: #ecfdf5;
+      color: #10b981;
+    }
+
+    .transaction-icon.withdrawal {
+      background: #fff1f2;
+      color: #ef4444;
+    }
+
+    .transaction-info {
+      min-width: 0;
+    }
+
+    .transaction-name {
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .transaction-date {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    .transaction-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .transaction-amount {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .amount-positive {
+      color: #10b981;
+    }
+
+    .amount-negative {
+      color: #ef4444;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 4px 7px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
+
+    .status.completed {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .status.pending {
+      background: #fffbeb;
+      color: #d97706;
+    }
+
+    /* RIGHT CARDS */
+
+    .side-card {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 21px;
+      margin-bottom: 18px;
+    }
+
+    .side-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .side-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .earning-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f1f4;
+    }
+
+    .earning-row:last-child {
+      border-bottom: none;
+    }
+
+    .earning-label {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .earning-value {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .progress-wrap {
+      margin-top: 18px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      height: 7px;
+      background: #eef0f4;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 68%;
+      height: 100%;
+      background: linear-gradient(90deg, #635bff, #8b5cf6);
+      border-radius: 10px;
+    }
+
+    .withdraw-card {
+      background: #f8f7ff;
+      border: 1px solid #e5e2ff;
+      border-radius: 18px;
+      padding: 21px;
+    }
+
+    .withdraw-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #eeecff;
+      color: #635bff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      margin-bottom: 13px;
+    }
+
+    .withdraw-title {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .withdraw-text {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin: 7px 0 15px;
+    }
+
+    .btn-primary {
+      width: 100%;
+      border: none;
+      background: #635bff;
+      color: white;
+      border-radius: 10px;
+      padding: 11px;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #5148e8;
+      transform: translateY(-1px);
+    }
+
+    .info-note {
+      margin-top: 18px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 10px;
+      color: #6b7280;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* EMPTY STATE */
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 35px 20px;
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    /* OVERLAY */
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17,24,39,0.45);
+      z-index: 950;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-column {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .side-card,
+      .withdraw-card {
+        margin-bottom: 0;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .content {
+        padding: 22px;
+      }
+
+      .topbar {
+        padding: 0 20px;
+      }
+
+      .profile-info {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .page-header {
+        flex-direction: column;
+      }
+
+      .header-balance {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .balance-card {
+        padding: 24px;
+      }
+
+      .balance-amount {
+        font-size: 34px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-column {
+        grid-template-columns: 1fr;
+      }
+
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .filter-row {
+        width: 100%;
+      }
+
+      .filter-select {
+        flex: 1;
+      }
+
+      .transaction {
+        align-items: flex-start;
+      }
+
+      .transaction-right {
+        padding-top: 3px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .content {
+        padding: 17px;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .topbar-title {
+        display: none;
+      }
+
+      .balance-actions {
+        flex-direction: column;
+      }
+
+      .btn-white,
+      .btn-outline-white {
+        width: 100%;
+      }
+
+      .transaction-left {
+        gap: 9px;
+      }
+
+      .transaction-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .transaction-name {
+        max-width: 145px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-logo">T</div>
+      <div class="brand-name">Taskora</div>
+    </div>
+
+    <nav class="nav">
+
+      <div class="nav-section">Main</div>
+
+      <a href="dashboard.html" class="nav-link">
+        <span class="nav-icon">⌂</span>
+        Dashboard
+      </a>
+
+      <a href="tasks.html" class="nav-link">
+        <span class="nav-icon">▦</span>
+        Available Tasks
+      </a>
+
+      <a href="my-tasks.html" class="nav-link">
+        <span class="nav-icon">✓</span>
+        My Tasks
+      </a>
+
+      <a href="wallet.html" class="nav-link active">
+        <span class="nav-icon">◈</span>
+        Wallet
+      </a>
+
+      <a href="withdraw.html" class="nav-link">
+        <span class="nav-icon">↗</span>
+        Withdraw
+      </a>
+
+      <a href="referral.html" class="nav-link">
+        <span class="nav-icon">♧</span>
+        Referral
+      </a>
+
+      <div class="nav-section">Account</div>
+
+      <a href="profile.html" class="nav-link">
+        <span class="nav-icon">◯</span>
+        Profile
+      </a>
+
+      <a href="support.html" class="nav-link">
+        <span class="nav-icon">?</span>
+        Support
+      </a>
+
+      <a href="about.html" class="nav-link">
+        <span class="nav-icon">ⓘ</span>
+        About
+      </a>
+
+      <div class="nav-section">Website</div>
+
+      <a href="index.html" class="nav-link">
+        <span class="nav-icon">↩</span>
+        Back to Home
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+      <a href="login.html" class="nav-link">
+        <span class="nav-icon">⇥</span>
+        Logout
+      </a>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+        <button class="mobile-menu" onclick="openSidebar()">☰</button>
+        <div class="topbar-title">Wallet</div>
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="notification">
+          ♢
+          <span class="notification-dot"></span>
+        </div>
+
+        <div class="profile-mini">
+          <div class="avatar">TU</div>
+
+          <div class="profile-info">
+            <div class="profile-name">Taskora User</div>
+            <div class="profile-role">Member</div>
+          </div>
+        </div>
+
+      </div>
+
+    </header>
+
+    <section class="content">
+
+      <!-- PAGE HEADER -->
+
+      <div class="page-header">
+
+        <div>
+          <h1 class="page-title">Wallet</h1>
+          <p class="page-subtitle">
+            Manage your earnings, balance and transaction history.
+          </p>
+        </div>
+
+        <div class="header-balance">
+          <span>Available</span>
+          <strong>$128.50</strong>
+        </div>
+
+      </div>
+
+      <!-- BALANCE HERO -->
+
+      <div class="balance-card">
+
+        <div class="balance-content">
+
+          <div class="balance-label">Available Balance</div>
+
+          <div class="balance-amount">$128.50</div>
+
+          <div class="balance-note">
+            Available for withdrawal
+          </div>
+
+          <div class="balance-actions">
+
+            <a href="withdraw.html" class="btn-white">
+              Withdraw Funds
+            </a>
+
+            <a href="#transactions" class="btn-outline-white">
+              View Transactions
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- STAT CARDS -->
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <div class="stat-top">
+            <div class="stat-label">Total Earnings</div>
+            <div class="stat-icon">↗</div>
+          </div>
+
+          <div class="stat-value">$384.75</div>
+
+          <div class="stat-description">
+            Lifetime task and referral earnings
+          </div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-top">
+            <div class="stat-label">Pending Earnings</div>
+            <div class="stat-icon">◷</div>
+          </div>
+
+          <div class="stat-value">$18.25</div>
+
+          <div class="stat-description">
+            Currently waiting for approval
+          </div>
+
+        </div>
+
+        <div class="stat-card">
+
+          <div class="stat-top">
+            <div class="stat-label">Total Withdrawn</div>
+            <div class="stat-icon">↘</div>
+          </div>
+
+          <div class="stat-value">$238.00</div>
+
+          <div class="stat-description">
+            Successfully withdrawn
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- MAIN GRID -->
+
+      <div class="main-grid">
+
+        <!-- TRANSACTIONS -->
+
+        <div class="card" id="transactions">
+
+          <div class="card-header">
+
+            <div>
+              <div class="card-title">Transaction History</div>
+              <div class="card-subtitle">
+                Your recent wallet activity
+              </div>
+            </div>
+
+            <div class="filter-row">
+
+              <select class="filter-select" id="typeFilter">
+                <option value="all">All Transactions</option>
+                <option value="income">Income</option>
+                <option value="withdrawal">Withdrawals</option>
+              </select>
+
+              <select class="filter-select" id="statusFilter">
+                <option value="all">All Status</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="transaction-list" id="transactionList">
+
+            <div
+              class="transaction"
+              data-type="income"
+              data-status="completed"
+            >
+
+              <div class="transaction-left">
+
+                <div class="transaction-icon income">+</div>
+
+                <div class="transaction-info">
+                  <div class="transaction-name">
+                    Website Content Review
+                  </div>
+
+                  <div class="transaction-date">
+                    Sep 30, 2026 · Task Reward
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="transaction-right">
+
+                <div class="transaction-amount amount-positive">
+                  +$8.00
+                </div>
+
+                <span class="status completed">
+                  Completed
+                </span>
+
+              </div>
+
+            </div>
+
+            <div
+              class="transaction"
+              data-type="income"
+              data-status="completed"
+            >
+
+              <div class="transaction-left">
+
+                <div class="transaction-icon income">+</div>
+
+                <div class="transaction-info">
+                  <div class="transaction-name">
+                    Story Classification
+                  </div>
+
+                  <div class="transaction-date">
+                    Sep 29, 2026 · Task Reward
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="transaction-right">
+
+                <div class="transaction-amount amount-positive">
+                  +$12.50
+                </div>
+
+                <span class="status completed">
+                  Completed
+                </span>
+
+              </div>
+
+            </div>
+
+            <div
+              class="transaction"
+              data-type="income"
+              data-status="pending"
+            >
+
+              <div class="transaction-left">
+
+                <div class="transaction-icon income">+</div>
+
+                <div class="transaction-info">
+                  <div class="transaction-name">
+                    Client Data Check
+                  </div>
+
+                  <div class="transaction-date">
+                    Sep 29, 2026 · Task Reward
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="transaction-right">
+
+                <div class="transaction-amount amount-positive">
+                  +$6.75
+                </div>
+
+                <span class="status pending">
+                  Pending
+                </span>
+
+              </div>
+
+            </div>
+
+            <div
+              class="transaction"
+              data-type="withdrawal"
+              data-status="completed"
+            >
+
+              <div class="transaction-left">
+
+                <div class="transaction-icon withdrawal">−</div>
+
+                <div class="transaction-info">
+                  <div class="transaction-name">
+                    Wallet Withdrawal
+                  </div>
+
+                  <div class="transaction-date">
+                    Sep 27, 2026 · Withdrawal
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="transaction-right">
+
+                <div class="transaction-amount amount-negative">
+                  -$50.00
+                </div>
+
+                <span class="status completed">
+                  Completed
+                </span>
+
+              </div>
+
+            </div>
+
+            <div
+              class="transaction"
+              data-type="income"
+              data-status="completed"
+            >
+
+              <div class="transaction-left">
+
+                <div class="transaction-icon income">+</div>
+
+                <div class="transaction-info">
+                  <div class="transaction-name">
+                    Referral Reward
+                  </div>
+
+                  <div class="transaction-date">
+                    Sep 26, 2026 · Referral
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="transaction-right">
+
+                <div class="transaction-amount amount-positive">
+                  +$5.00
+                </div>
+
+                <span class="status completed">
+                  Completed
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="empty" id="emptyState">
+            No transactions found.
+          </div>
+
+        </div>
+
+        <!-- SIDE COLUMN -->
+
+        <div class="side-column">
+
+          <!-- EARNINGS -->
+
+          <div class="side-card">
+
+            <div class="side-title">
+              Earnings Overview
+            </div>
+
+            <div class="earning-row">
+              <span class="earning-label">Task Earnings</span>
+              <strong class="earning-value">$362.25</strong>
+            </div>
+
+            <div class="earning-row">
+              <span class="earning-label">Referral Earnings</span>
+              <strong class="earning-value">$22.50</strong>
+            </div>
+
+            <div class="earning-row">
+              <span class="earning-label">Pending Amount</span>
+              <strong class="earning-value">$18.25</strong>
+            </div>
+
+            <div class="earning-row">
+              <span class="earning-label">Withdrawn</span>
+              <strong class="earning-value">$238.00</strong>
+            </div>
+
+            <div class="progress-wrap">
+
+              <div class="progress-label">
+                <span>Monthly progress</span>
+                <strong>68%</strong>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-fill"></div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- WITHDRAW -->
+
+          <div class="withdraw-card">
+
+            <div class="withdraw-icon">↗</div>
+
+            <div class="withdraw-title">
+              Ready to withdraw?
+            </div>
+
+            <div class="withdraw-text">
+              Use your available balance to request a withdrawal.
+              Withdrawal methods and limits will be connected later.
+            </div>
+
+            <a href="withdraw.html">
+              <button class="btn-primary">
+                Go to Withdraw
+              </button>
+            </a>
+
+            <div class="info-note">
+              Wallet information shown here is sample frontend data.
+              Real balance and transactions will become dynamic after
+              Firebase/backend integration.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+
+    /* MOBILE SIDEBAR */
+
+    function openSidebar() {
+      document.getElementById("sidebar").classList.add("open");
+      document.getElementById("overlay").classList.add("show");
+    }
+
+    function closeSidebar() {
+      document.getElementById("sidebar").classList.remove("open");
+      document.getElementById("overlay").classList.remove("show");
+    }
+
+    /* TRANSACTION FILTER */
+
+    const typeFilter = document.getElementById("typeFilter");
+    const statusFilter = document.getElementById("statusFilter");
+
+    const transactions =
+      document.querySelectorAll(".transaction");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+    function filterTransactions() {
+
+      const selectedType = typeFilter.value;
+      const selectedStatus = statusFilter.value;
+
+      let visibleCount = 0;
+
+      transactions.forEach(transaction => {
+
+        const type = transaction.dataset.type;
+        const status = transaction.dataset.status;
+
+        const typeMatch =
+          selectedType === "all" ||
+          type === selectedType;
+
+        const statusMatch =
+          selectedStatus === "all" ||
+          status === selectedStatus;
+
+        if (typeMatch && statusMatch) {
+          transaction.style.display = "flex";
+          visibleCount++;
+        } else {
+          transaction.style.display = "none";
+        }
+
+      });
+
+      emptyState.style.display =
+        visibleCount === 0 ? "block" : "none";
+    }
+
+    typeFilter.addEventListener(
+      "change",
+      filterTransactions
+    );
+
+    statusFilter.addEventListener(
+      "change",
+      filterTransactions
+    );
+
+  </script>
+
+</body>
+</html>
