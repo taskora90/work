@@ -1,1 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Login - Taskora</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #635bff;
+      --primary-dark: #4f46e5;
+      --dark: #111827;
+      --text: #374151;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --light: #f7f8ff;
+      --white: #ffffff;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(99, 91, 255, 0.13),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 85%,
+          rgba(139, 92, 246, 0.12),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #f7f8ff
+        );
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+
+    header {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      width: min(1180px, 92%);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dark);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      background: linear-gradient(
+        135deg,
+        var(--primary),
+        #8b5cf6
+      );
+      box-shadow:
+        0 8px 22px rgba(99, 91, 255, 0.25);
+    }
+
+    .home-link {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      transition: 0.2s;
+    }
+
+    .home-link:hover {
+      color: var(--primary);
+    }
+
+    /* =========================
+       MAIN
+    ========================== */
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 20px;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .login-card {
+      padding: 38px;
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow:
+        0 25px 70px rgba(31, 41, 55, 0.10);
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .welcome-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 17px;
+      color: var(--primary);
+      background: #f0efff;
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .welcome h1 {
+      color: var(--dark);
+      font-size: 29px;
+      letter-spacing: -0.8px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FORM
+    ========================== */
+
+    .form-group {
+      margin-bottom: 19px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 15px;
+      pointer-events: none;
+    }
+
+    input {
+      width: 100%;
+      height: 50px;
+      padding: 0 14px 0 43px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      outline: none;
+      color: var(--dark);
+      background: white;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    input::placeholder {
+      color: #a5a9b3;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow:
+        0 0 0 4px rgba(99, 91, 255, 0.09);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #8b909b;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .password-toggle:hover {
+      color: var(--primary);
+    }
+
+    /* =========================
+       OPTIONS
+    ========================== */
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 5px 0 24px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .remember input {
+      width: 15px;
+      height: 15px;
+      padding: 0;
+      accent-color: var(--primary);
+      box-shadow: none;
+    }
+
+    .forgot {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================
+       LOGIN BUTTON
+    ========================== */
+
+    .login-button {
+      width: 100%;
+      height: 51px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+      box-shadow:
+        0 10px 25px rgba(99, 91, 255, 0.22);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 14px 30px rgba(99, 91, 255, 0.28);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       DIVIDER
+    ========================== */
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 26px 0;
+      color: #9ca3af;
+      font-size: 11px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* =========================
+       REGISTER
+    ========================== */
+
+    .register-text {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .register-text a {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .register-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================
+       SECURITY NOTE
+    ========================== */
+
+    .security-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 22px;
+      color: #8b909b;
+      font-size: 10px;
+    }
+
+    .security-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: #f0fdf4;
+      color: #16a34a;
+      font-size: 11px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #8b909b;
+      font-size: 10px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 520px) {
+
+      header {
+        height: 68px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+      }
+
+      .home-link {
+        font-size: 12px;
+      }
+
+      main {
+        padding: 35px 15px;
+      }
+
+      .login-card {
+        padding: 27px 21px;
+        border-radius: 20px;
+      }
+
+      .welcome h1 {
+        font-size: 26px;
+      }
+
+      .welcome-icon {
+        width: 52px;
+        height: 52px;
+      }
+
+      .form-options {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+      <div class="header-inner">
+
+        <a href="index.html" class="logo">
+
+          <span class="logo-icon">
+            T
+          </span>
+
+          <span>
+            Taskora
+          </span>
+
+        </a>
+
+        <a href="index.html" class="home-link">
+          ← Back to Home
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <!-- =========================
+         LOGIN
+    ========================== -->
+
+    <main>
+
+      <div class="login-wrapper">
+
+        <div class="login-card">
+
+          <div class="welcome">
+
+            <div class="welcome-icon">
+              →
+            </div>
+
+            <h1>
+              Welcome Back
+            </h1>
+
+            <p>
+              Login to your Taskora account and continue
+              where you left off.
+            </p>
+
+          </div>
+
+
+          <form id="loginForm">
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="email"
+              >
+                Email Address
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon">
+                  @
+                </span>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  autocomplete="email"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="password"
+              >
+                Password
+              </label>
+
+              <div class="input-wrapper">
+
+                <span class="input-icon">
+                  ●
+                </span>
+
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  required
+                >
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="togglePassword"
+                >
+                  Show
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- Options -->
+
+            <div class="form-options">
+
+              <label class="remember">
+
+                <input
+                  type="checkbox"
+                  id="remember"
+                >
+
+                <span>
+                  Remember me
+                </span>
+
+              </label>
+
+              <a
+                href="#"
+                class="forgot"
+                id="forgotPassword"
+              >
+                Forgot Password?
+              </a>
+
+            </div>
+
+
+            <!-- Login -->
+
+            <button
+              type="submit"
+              class="login-button"
+            >
+              Login to Taskora
+            </button>
+
+          </form>
+
+
+          <div class="divider">
+            OR
+          </div>
+
+
+          <!-- Register -->
+
+          <div class="register-text">
+
+            Don't have an account?
+
+            <a href="register.html">
+              Create Account
+            </a>
+
+          </div>
+
+
+          <!-- Security -->
+
+          <div class="security-note">
+
+            <span class="security-icon">
+              ✓
+            </span>
+
+            <span>
+              Your account information is protected.
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+      © 2026 Taskora. All Rights Reserved.
+
+    </footer>
+
+  </div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const togglePassword =
+      document.getElementById("togglePassword");
+
+
+    togglePassword.addEventListener(
+      "click",
+      function () {
+
+        if (passwordInput.type === "password") {
+
+          passwordInput.type = "text";
+          togglePassword.textContent = "Hide";
+
+        } else {
+
+          passwordInput.type = "password";
+          togglePassword.textContent = "Show";
+
+        }
+
+      }
+    );
+
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+
+    loginForm.addEventListener(
+      "submit",
+      function (event) {
+
+        event.preventDefault();
+
+        /*
+          Backend authentication will be connected here
+          later using Firebase Authentication.
+        */
+
+        alert(
+          "Login system will be connected after Firebase setup."
+        );
+
+      }
+    );
+
+
+    document
+      .getElementById("forgotPassword")
+      .addEventListener(
+        "click",
+        function (event) {
+
+          event.preventDefault();
+
+          alert(
+            "Password recovery will be connected with Firebase."
+          );
+
+        }
+      );
+
+  </script>
+
+</body>
+</html>
