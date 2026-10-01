@@ -950,9 +950,9 @@
 
           <div class="user-info">
 
-            <div class="user-name">
-              Taskora User
-            </div>
+           <div class="user-name" id="userName">
+  Taskora User
+</div>
 
             <div class="user-status">
               ● Active account
@@ -1747,6 +1747,8 @@
 
 
       console.log("Firebase User Data:", userData);
+      document.getElementById("userName").textContent =
+  userData.fullName || user.displayName || "Taskora User";
 document.getElementById("balanceValue").textContent =
   "$" + Number(userData.balance || 0).toFixed(2);
 
