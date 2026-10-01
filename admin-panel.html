@@ -1266,229 +1266,63 @@ tr:last-child td{
         <div class="grid">
 
 
-          <div class="card">
+<div class="card">
 
-            <div class="card-header">
+  <div class="card-header">
 
-              <div>
+    <div>
+      <h3>Recent Users</h3>
 
-                <h3>
-                  Recent Users
-                </h3>
+      <p>
+        Latest registered accounts
+      </p>
+    </div>
 
-                <p>
-                  Latest registered accounts
-                </p>
+    <button
+      class="view-btn"
+      onclick="showSection('users')"
+    >
+      View All
+    </button>
 
-              </div>
+  </div>
 
-              <button
-                class="view-btn"
-                onclick="showSection('users')"
-              >
-                View All
-              </button>
 
-            </div>
+  <div class="card-body">
 
+    <div class="table-wrap">
 
-            <div class="card-body">
+      <table>
 
-              <div class="table-wrap">
+        <thead>
+          <tr>
 
-                <table>
+            <th>User</th>
+            <th>Joined</th>
+            <th>Status</th>
 
-                  <thead>
+          </tr>
+        </thead>
 
-                    <tr>
 
-                      <th>
-                        User
-                      </th>
+        <tbody id="recentUsersBody">
 
-                      <th>
-                        Joined
-                      </th>
+          <tr>
+            <td colspan="3">
+              Loading users...
+            </td>
+          </tr>
 
-                      <th>
-                        Status
-                      </th>
+        </tbody>
 
-                    </tr>
+      </table>
 
-                  </thead>
+    </div>
 
+  </div>
 
-                  <tbody>
-
-
-                    <tr>
-
-                      <td>
-
-                        <div class="user-cell">
-
-                          <div class="user-mini">
-                            AR
-                          </div>
-
-                          <div>
-
-                            <strong>
-                              Alex Rahman
-                            </strong>
-
-                            <span>
-                              alex@example.com
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-                        Today
-                      </td>
-
-                      <td>
-                        <span class="status active">
-                          Active
-                        </span>
-                      </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                      <td>
-
-                        <div class="user-cell">
-
-                          <div class="user-mini">
-                            SM
-                          </div>
-
-                          <div>
-
-                            <strong>
-                              Sami Mahmud
-                            </strong>
-
-                            <span>
-                              sami@example.com
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-                        Today
-                      </td>
-
-                      <td>
-                        <span class="status active">
-                          Active
-                        </span>
-                      </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                      <td>
-
-                        <div class="user-cell">
-
-                          <div class="user-mini">
-                            NR
-                          </div>
-
-                          <div>
-
-                            <strong>
-                              Nabil Rahman
-                            </strong>
-
-                            <span>
-                              nabil@example.com
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-                        Yesterday
-                      </td>
-
-                      <td>
-                        <span class="status pending">
-                          Pending
-                        </span>
-
-                      </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                      <td>
-
-                        <div class="user-cell">
-
-                          <div class="user-mini">
-                            MS
-                          </div>
-
-                          <div>
-
-                            <strong>
-                              Maria Sultana
-                            </strong>
-
-                            <span>
-                              maria@example.com
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-                        Sep 29
-                      </td>
-
-                      <td>
-                        <span class="status active">
-                          Active
-                        </span>
-
-                      </td>
-
-                    </tr>
-
-
-                  </tbody>
-
-                </table>
-
-              </div>
-
-            </div>
-
-          </div>
+</div>
+     
 
 
           <!-- QUICK ACTIONS -->
