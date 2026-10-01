@@ -2859,5 +2859,16 @@ tr:last-child td{
     }
   });
   </script>
+  <script type="module">
+  import {
+    getFirestore,
+    collection,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+  const db = getFirestore();
+
+  console.log("Firestore connected:", db);
+  </script>
 </body>
 </html>
