@@ -2512,295 +2512,311 @@ tr:last-child td{
 </div>
 
 
-<script>
+<script type="module">
 
-/* =====================================================
-   DEMO ADMIN CREDENTIALS
-===================================================== */
+  import { auth } from "./firebase-config.js";
 
-const ADMIN_EMAIL = "admin@taskora.com";
-const ADMIN_PASSWORD = "TaskoraAdmin123";
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-document
-.getElementById("adminLoginForm")
-.addEventListener("submit",function(event){
-
-  event.preventDefault();
-
-  const email =
-    document
-    .getElementById("adminEmail")
-    .value
-    .trim();
-
-  const password =
-    document
-    .getElementById("adminPassword")
-    .value;
-
-  const error =
-    document.getElementById("loginError");
+  import {
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
-  if(
-    email === ADMIN_EMAIL &&
-    password === ADMIN_PASSWORD
-  ){
-
-    error.style.display = "none";
-
-    sessionStorage.setItem(
-      "taskoraAdminLoggedIn",
-      "true"
-    );
-
-    showAdminPanel();
-
-  }else{
-
-    error.style.display = "block";
-
-  }
-
-});
-
-
-/* =====================================================
-   SHOW ADMIN PANEL
-===================================================== */
-
-function showAdminPanel(){
+  /* =====================================================
+     ADMIN LOGIN
+  ===================================================== */
 
   document
-    .getElementById("loginScreen")
-    .style.display = "none";
+    .getElementById("adminLoginForm")
+    .addEventListener("submit", async function(event) {
 
-  document
-    .getElementById("adminApp")
-    .style.display = "block";
+      event.preventDefault();
 
-}
+      const email =
+        document
+          .getElementById("adminEmail")
+          .value
+          .trim();
 
+      const password =
+        document
+          .getElementById("adminPassword")
+          .value;
 
-/* =====================================================
-   CHECK SESSION
-===================================================== */
-
-function checkAdminSession(){
-
-  const loggedIn =
-    sessionStorage.getItem(
-      "taskoraAdminLoggedIn"
-    );
-
-  if(loggedIn === "true"){
-
-    showAdminPanel();
-
-  }
-
-}
+      const error =
+        document.getElementById("loginError");
 
 
-/* =====================================================
-   PASSWORD TOGGLE
-===================================================== */
+      if (!email || !password) {
 
-function togglePassword(){
+        error.textContent =
+          "Please enter email and password.";
 
-  const password =
-    document.getElementById("adminPassword");
+        error.style.display = "block";
 
-  const button =
-    document.querySelector(".password-toggle");
+        return;
 
-
-  if(password.type === "password"){
-
-    password.type = "text";
-    button.textContent = "Hide";
-
-  }else{
-
-    password.type = "password";
-    button.textContent = "Show";
-
-  }
-
-}
+      }
 
 
-/* =====================================================
-   SECTION SWITCHING
-===================================================== */
+      try {
 
-function showSection(section){
-
-  const sections = [
-    "dashboard",
-    "users",
-    "tasks",
-    "withdrawals",
-    "support",
-    "settings"
-  ];
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
 
-  sections.forEach(function(item){
+        error.style.display = "none";
 
-    const element =
-      document.getElementById(
-        item + "Section"
-      );
-
-    if(element){
-
-      element.style.display = "none";
-
-    }
-
-  });
+        showAdminPanel();
 
 
-  const selected =
-    document.getElementById(
-      section + "Section"
-    );
+      } catch (err) {
 
+        console.error(
+          "Admin login error:",
+          err
+        );
 
-  if(selected){
+        error.textContent =
+          "Invalid admin email or password.";
 
-    selected.style.display = "block";
+        error.style.display = "block";
 
-  }
-
-
-  document
-    .querySelectorAll(".nav-link")
-    .forEach(function(link){
-
-      link.classList.remove("active");
+      }
 
     });
 
 
-  const links =
-    document.querySelectorAll(
-      ".nav-link"
-    );
+  /* =====================================================
+     SHOW ADMIN PANEL
+  ===================================================== */
+
+  function showAdminPanel() {
+
+    document
+      .getElementById("loginScreen")
+      .style.display = "none";
+
+    document
+      .getElementById("adminApp")
+      .style.display = "block";
+
+  }
 
 
-  links.forEach(function(link){
+  /* =====================================================
+     CHECK FIREBASE LOGIN
+  ===================================================== */
 
-    if(
-      link.textContent
-      .trim()
-      .toLowerCase()
-      .includes(section.toLowerCase())
-    ){
+  onAuthStateChanged(auth, (user) => {
 
-      link.classList.add("active");
+    if (user) {
+
+      showAdminPanel();
 
     }
 
   });
 
 
-  closeSidebar();
+  /* =====================================================
+     PASSWORD TOGGLE
+  ===================================================== */
 
-}
+  function togglePassword() {
 
+    const password =
+      document.getElementById("adminPassword");
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-function openSidebar(){
-
-  document
-    .getElementById("sidebar")
-    .classList.add("open");
-
-  document
-    .getElementById("overlay")
-    .classList.add("show");
-
-}
+    const button =
+      document.querySelector(".password-toggle");
 
 
-function closeSidebar(){
+    if (password.type === "password") {
 
-  document
-    .getElementById("sidebar")
-    .classList.remove("open");
+      password.type = "text";
 
-  document
-    .getElementById("overlay")
-    .classList.remove("show");
+      button.textContent = "Hide";
 
-}
+    } else {
 
+      password.type = "password";
 
-/* =====================================================
-   NOTIFICATION
-===================================================== */
+      button.textContent = "Show";
 
-function showNotification(){
-
-  alert(
-    "You have new administrator notifications."
-  );
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function adminLogout(){
-
-  const confirmLogout =
-    confirm(
-      "Are you sure you want to logout?"
-    );
-
-
-  if(confirmLogout){
-
-    sessionStorage.removeItem(
-      "taskoraAdminLoggedIn"
-    );
-
-    document
-      .getElementById("adminApp")
-      .style.display = "none";
-
-    document
-      .getElementById("loginScreen")
-      .style.display = "flex";
-
-    document
-      .getElementById("adminLoginForm")
-      .reset();
+    }
 
   }
 
-}
+
+  /* =====================================================
+     SECTION SWITCHING
+  ===================================================== */
+
+  function showSection(section) {
+
+    const sections = [
+      "dashboard",
+      "users",
+      "tasks",
+      "withdrawals",
+      "support",
+      "settings"
+    ];
 
 
-/* =====================================================
-   START
-===================================================== */
+    sections.forEach(function(item) {
 
-checkAdminSession();
+      const element =
+        document.getElementById(
+          item + "Section"
+        );
+
+      if (element) {
+
+        element.style.display = "none";
+
+      }
+
+    });
+
+
+    const selected =
+      document.getElementById(
+        section + "Section"
+      );
+
+
+    if (selected) {
+
+      selected.style.display = "block";
+
+    }
+
+
+    document
+      .querySelectorAll(".nav-link")
+      .forEach(function(link) {
+
+        link.classList.remove("active");
+
+      });
+
+
+    document
+      .querySelectorAll(".nav-link")
+      .forEach(function(link) {
+
+        if (
+          link.textContent
+            .trim()
+            .toLowerCase()
+            .includes(section.toLowerCase())
+        ) {
+
+          link.classList.add("active");
+
+        }
+
+      });
+
+
+    closeSidebar();
+
+  }
+
+
+  /* =====================================================
+     SIDEBAR
+  ===================================================== */
+
+  function openSidebar() {
+
+    document
+      .getElementById("sidebar")
+      .classList.add("open");
+
+    document
+      .getElementById("overlay")
+      .classList.add("show");
+
+  }
+
+
+  function closeSidebar() {
+
+    document
+      .getElementById("sidebar")
+      .classList.remove("open");
+
+    document
+      .getElementById("overlay")
+      .classList.remove("show");
+
+  }
+
+
+  /* =====================================================
+     NOTIFICATION
+  ===================================================== */
+
+  function showNotification() {
+
+    alert(
+      "You have new administrator notifications."
+    );
+
+  }
+
+
+  /* =====================================================
+     LOGOUT
+  ===================================================== */
+
+  async function adminLogout() {
+
+    const confirmLogout =
+      confirm(
+        "Are you sure you want to logout?"
+      );
+
+
+    if (!confirmLogout) {
+      return;
+    }
+
+
+    try {
+
+      await signOut(auth);
+
+      document
+        .getElementById("adminApp")
+        .style.display = "none";
+
+      document
+        .getElementById("loginScreen")
+        .style.display = "flex";
+
+      document
+        .getElementById("adminLoginForm")
+        .reset();
+
+    } catch (error) {
+
+      console.error(
+        "Admin logout error:",
+        error
+      );
+
+    }
+
+  }
 
 </script>
-
 </body>
 </html>
