@@ -823,6 +823,24 @@ tr:last-child td{
 }
 
 </style>
+  <!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBITIN70jLaM8XCXhCjYKbg2uhdG6yFOS4",
+    authDomain: "taskora-b2b29.firebaseapp.com",
+    projectId: "taskora-b2b29",
+    storageBucket: "taskora-b2b29.firebasestorage.app",
+    messagingSenderId: "376297360134",
+    appId: "1:376297360134:web:ba6ab17055df42a8e36c87",
+    measurementId: "G-9803M7DPM5"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+</script>
 </head>
 
 <body>
@@ -2818,5 +2836,28 @@ tr:last-child td{
   }
 
 </script>
+  <script type="module">
+  import {
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+  const loginForm = document.getElementById("adminLoginForm");
+
+  loginForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      alert("Login Successful!");
+
+    } catch (error) {
+      alert("Login failed: " + error.message);
+    }
+  });
+  </script>
 </body>
 </html>
