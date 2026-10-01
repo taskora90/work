@@ -1091,9 +1091,9 @@
               Available Balance
             </div>
 
-            <div class="stat-value">
-              $128.50
-            </div>
+           <div class="stat-value" id="balanceValue">
+  $0.00
+</div>
 
           </div>
 
@@ -1112,13 +1112,11 @@
 
             </div>
 
-            <div class="stat-label">
-              Completed Tasks
-            </div>
+           <div class="stat-label"> Completed Tasks </div>
 
-            <div class="stat-value">
-              48
-            </div>
+           <div class="stat-value" id="completedTasksValue">
+  0
+</div>
 
           </div>
 
@@ -1141,9 +1139,9 @@
               Total Earnings
             </div>
 
-            <div class="stat-value">
-              $384.75
-            </div>
+           <div class="stat-value" id="totalEarningsValue">
+  $0.00
+</div>
 
           </div>
 
@@ -1166,9 +1164,9 @@
               Referral Earnings
             </div>
 
-            <div class="stat-value">
-              $22.50
-            </div>
+            <div class="stat-value" id="referralEarningsValue">
+  $0.00
+</div>
 
           </div>
 
@@ -1749,7 +1747,17 @@
 
 
       console.log("Firebase User Data:", userData);
+document.getElementById("balanceValue").textContent =
+  "$" + Number(userData.balance || 0).toFixed(2);
 
+document.getElementById("completedTasksValue").textContent =
+  userData.completedTasks || 0;
+
+document.getElementById("totalEarningsValue").textContent =
+  "$" + Number(userData.totalEarnings || 0).toFixed(2);
+
+document.getElementById("referralEarningsValue").textContent =
+  "$" + Number(userData.referralEarnings || 0).toFixed(2);
 
       /*
         এখন প্রথমে শুধু Firebase থেকে
