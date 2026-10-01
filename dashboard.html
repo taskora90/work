@@ -932,10 +932,10 @@
           About
         </a>
 
-        <a href="login.html">
-          <span class="menu-icon">←</span>
-          Logout
-        </a>
+        <a href="#" id="logoutBtn">
+  <span class="menu-icon">←</span>
+  Logout
+</a>
 
       </nav>
 
@@ -1716,7 +1716,11 @@
   import {
     onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+  
   import {
     doc,
     getDoc
@@ -1770,7 +1774,25 @@ document.getElementById("referralEarningsValue").textContent =
     }
 
   });
+document.getElementById("logoutBtn").addEventListener("click", async function (e) {
 
+  e.preventDefault();
+
+  try {
+
+    await signOut(auth);
+
+    window.location.href = "login.html";
+
+  } catch (error) {
+
+    console.error("Logout error:", error);
+
+    alert("Logout failed. Please try again.");
+
+  }
+
+});
 </script>
 </body>
 </html>
