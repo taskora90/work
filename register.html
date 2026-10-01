@@ -952,6 +952,127 @@
     );
 
   </script>
+<script type="module">
+  import { auth, db } from "./firebase-config.js";
 
+  import {
+    createUserWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+  import {
+    doc,
+    setDoc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+  const registerForm = document.querySelector("form");
+
+
+  if (registerForm) {
+
+    registerForm.addEventListener("submit", async function (e) {
+
+      e.preventDefault();
+
+
+      const inputs = registerForm.querySelectorAll("input");
+
+      const fullName = inputs[0]?.value.trim();
+      const email = inputs[1]?.value.trim();
+      const password = inputs[2]?.value;
+      const confirmPassword = inputs[3]?.value;
+
+
+      if (!fullName || !email || !password || !confirmPassword) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
+
+
+      try {
+
+        const userCredential =
+          await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+
+        const user = userCredential.user;
+
+
+        await updateProfile(user, {
+          displayName: fullName
+        });
+
+
+        await setDoc(
+          doc(db, "users", user.uid),
+          {
+            uid: user.uid,
+            fullName: fullName,
+            email: email,
+            balance: 0,
+            totalEarnings: 0,
+            completedTasks: 0,
+            referralEarnings: 0,
+            referralId: "TK-" + Math.floor(10000 + Math.random() * 90000),
+            accountStatus: "Active",
+            createdAt: serverTimestamp()
+          }
+        );
+
+
+        alert("Account created successfully!");
+
+
+        window.location.href = "dashboard.html";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        if (error.code === "auth/email-already-in-use") {
+
+          alert("This email is already registered.");
+
+        } else if (error.code === "auth/invalid-email") {
+
+          alert("Please enter a valid email address.");
+
+        } else if (error.code === "auth/weak-password") {
+
+          alert("Password is too weak. Use at least 6 characters.");
+
+        } else {
+
+          alert("Registration failed. Please try again.");
+
+        }
+
+      }
+
+    });
+
+  }
+
+</script>
 </body>
 </html>
