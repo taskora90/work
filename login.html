@@ -749,6 +749,49 @@
       );
 
   </script>
+<script type="module">
+  import { auth } from "./firebase-config.js";
+  import {
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+  const loginForm = document.querySelector("form");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const emailInput = loginForm.querySelector('input[type="email"]');
+      const passwordInput = loginForm.querySelector('input[type="password"]');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+
+        alert("Login successful!");
+
+        window.location.href = "dashboard.html";
+
+      } catch (error) {
+        console.error(error);
+
+        if (error.code === "auth/invalid-credential") {
+          alert("Invalid email or password.");
+        } else if (error.code === "auth/too-many-requests") {
+          alert("Too many attempts. Please try again later.");
+        } else {
+          alert("Login failed. Please try again.");
+        }
+      }
+    });
+  }
+</script>
 </body>
 </html>
