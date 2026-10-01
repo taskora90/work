@@ -1,1 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withdraw - Taskora</title>
 
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#111827;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  width:250px;
+  height:100vh;
+  background:#fff;
+  border-right:1px solid #e5e7eb;
+  z-index:1000;
+  display:flex;
+  flex-direction:column;
+}
+
+.brand{
+  height:76px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 22px;
+  border-bottom:1px solid #f0f1f4;
+}
+
+.brand-logo{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#635bff,#8b5cf6);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:800;
+  box-shadow:0 7px 18px rgba(99,91,255,.25);
+}
+
+.brand-name{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.5px;
+}
+
+.nav{
+  padding:18px 12px;
+  overflow-y:auto;
+  flex:1;
+}
+
+.nav-section{
+  margin:16px 12px 8px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:#9ca3af;
+  font-weight:700;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:11px 13px;
+  margin:3px 0;
+  border-radius:11px;
+  color:#6b7280;
+  font-size:14px;
+  font-weight:600;
+  transition:.2s;
+}
+
+.nav-link:hover{
+  background:#f5f4ff;
+  color:#635bff;
+}
+
+.nav-link.active{
+  background:#eeecff;
+  color:#635bff;
+}
+
+.nav-icon{
+  width:20px;
+  text-align:center;
+  font-size:17px;
+}
+
+.sidebar-bottom{
+  padding:14px 12px 18px;
+  border-top:1px solid #f0f1f4;
+}
+
+/* MAIN */
+
+.main{
+  margin-left:250px;
+  min-height:100vh;
+}
+
+.topbar{
+  height:76px;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  position:sticky;
+  top:0;
+  z-index:900;
+  backdrop-filter:blur(12px);
+}
+
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.mobile-menu{
+  display:none;
+  border:none;
+  background:#f3f4f6;
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:20px;
+}
+
+.topbar-title{
+  font-size:15px;
+  font-weight:700;
+  color:#374151;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.notification{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  background:#f5f7fb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  color:#4b5563;
+}
+
+.notification-dot{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ef4444;
+  top:9px;
+  right:9px;
+  border:2px solid white;
+}
+
+.profile-mini{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#635bff,#8b5cf6);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:800;
+}
+
+.profile-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.profile-role{
+  font-size:11px;
+  color:#9ca3af;
+}
+
+/* CONTENT */
+
+.content{
+  padding:30px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.page-header{
+  margin-bottom:25px;
+}
+
+.page-title{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-.7px;
+}
+
+.page-subtitle{
+  color:#6b7280;
+  margin-top:7px;
+  font-size:14px;
+}
+
+/* BALANCE */
+
+.balance-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:16px;
+  margin-bottom:25px;
+}
+
+.balance-box{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:20px;
+}
+
+.balance-box.primary{
+  background:linear-gradient(135deg,#635bff,#5148e8);
+  color:white;
+  border:none;
+}
+
+.balance-label{
+  font-size:12px;
+  color:#6b7280;
+  margin-bottom:9px;
+}
+
+.primary .balance-label{
+  color:rgba(255,255,255,.78);
+}
+
+.balance-value{
+  font-size:27px;
+  font-weight:800;
+}
+
+.balance-help{
+  font-size:11px;
+  color:#9ca3af;
+  margin-top:6px;
+}
+
+.primary .balance-help{
+  color:rgba(255,255,255,.7);
+}
+
+/* GRID */
+
+.withdraw-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.75fr);
+  gap:22px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.card-header{
+  padding:21px;
+  border-bottom:1px solid #f0f1f4;
+}
+
+.card-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+.card-subtitle{
+  color:#9ca3af;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.form{
+  padding:22px;
+}
+
+.form-group{
+  margin-bottom:19px;
+}
+
+.form-label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:#374151;
+  margin-bottom:8px;
+}
+
+.form-input,
+.form-select{
+  width:100%;
+  height:46px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:0 13px;
+  outline:none;
+  color:#374151;
+  background:#fff;
+  transition:.2s;
+}
+
+.form-input:focus,
+.form-select:focus{
+  border-color:#635bff;
+  box-shadow:0 0 0 3px rgba(99,91,255,.08);
+}
+
+.amount-wrap{
+  position:relative;
+}
+
+.currency{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  font-weight:700;
+  color:#6b7280;
+}
+
+.amount-input{
+  padding-left:31px;
+}
+
+.available-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:7px;
+  font-size:11px;
+  color:#9ca3af;
+}
+
+.use-all{
+  color:#635bff;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.method-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:11px;
+}
+
+.method{
+  position:relative;
+}
+
+.method input{
+  position:absolute;
+  opacity:0;
+}
+
+.method-label{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:13px;
+  border:1px solid #e5e7eb;
+  border-radius:11px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.method input:checked + .method-label{
+  border-color:#635bff;
+  background:#f7f6ff;
+}
+
+.method-icon{
+  width:35px;
+  height:35px;
+  border-radius:9px;
+  background:#eeecff;
+  color:#635bff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+}
+
+.method-name{
+  font-size:12px;
+  font-weight:750;
+}
+
+.method-description{
+  font-size:10px;
+  color:#9ca3af;
+  margin-top:2px;
+}
+
+.submit-btn{
+  width:100%;
+  border:none;
+  background:#635bff;
+  color:#fff;
+  border-radius:11px;
+  padding:13px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
+  margin-top:4px;
+}
+
+.submit-btn:hover{
+  background:#5148e8;
+  transform:translateY(-1px);
+}
+
+/* RIGHT */
+
+.side-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:21px;
+  margin-bottom:18px;
+}
+
+.side-card:last-child{
+  margin-bottom:0;
+}
+
+.side-title{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:16px;
+}
+
+.rule{
+  display:flex;
+  justify-content:space-between;
+  padding:11px 0;
+  border-bottom:1px solid #f0f1f4;
+  font-size:12px;
+}
+
+.rule:last-child{
+  border-bottom:none;
+}
+
+.rule span{
+  color:#6b7280;
+}
+
+.rule strong{
+  color:#111827;
+}
+
+.info-box{
+  padding:13px;
+  background:#f8f7ff;
+  border:1px solid #e5e2ff;
+  border-radius:11px;
+  font-size:11px;
+  color:#6b7280;
+  line-height:1.65;
+}
+
+.history-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 0;
+  color:#635bff;
+  font-size:12px;
+  font-weight:750;
+}
+
+/* MODAL */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.5);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:2000;
+}
+
+.modal-overlay.show{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 25px 60px rgba(0,0,0,.18);
+  text-align:center;
+}
+
+.modal-icon{
+  width:55px;
+  height:55px;
+  border-radius:16px;
+  background:#eeecff;
+  color:#635bff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 15px;
+  font-size:23px;
+  font-weight:800;
+}
+
+.modal h2{
+  font-size:20px;
+  margin-bottom:8px;
+}
+
+.modal p{
+  font-size:12px;
+  color:#6b7280;
+  line-height:1.6;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:21px;
+}
+
+.modal-btn{
+  flex:1;
+  border:none;
+  border-radius:10px;
+  padding:11px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:750;
+}
+
+.cancel-btn{
+  background:#f3f4f6;
+  color:#4b5563;
+}
+
+.confirm-btn{
+  background:#635bff;
+  color:white;
+}
+
+/* OVERLAY */
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.45);
+  z-index:950;
+}
+
+.overlay.show{
+  display:block;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+  .withdraw-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:850px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:transform .25s ease;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .profile-info{
+    display:none;
+  }
+
+  .content{
+    padding:22px;
+  }
+
+}
+
+@media(max-width:650px){
+
+  .topbar{
+    padding:0 18px;
+  }
+
+  .balance-strip{
+    grid-template-columns:1fr;
+  }
+
+  .method-grid{
+    grid-template-columns:1fr;
+  }
+
+  .page-title{
+    font-size:24px;
+  }
+
+}
+
+@media(max-width:450px){
+
+  .content{
+    padding:17px;
+  }
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .topbar-title{
+    display:none;
+  }
+
+  .form,
+  .side-card,
+  .card-header{
+    padding:18px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand">
+    <div class="brand-logo">T</div>
+    <div class="brand-name">Taskora</div>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-section">Main</div>
+
+    <a href="dashboard.html" class="nav-link">
+      <span class="nav-icon">⌂</span>
+      Dashboard
+    </a>
+
+    <a href="tasks.html" class="nav-link">
+      <span class="nav-icon">▦</span>
+      Available Tasks
+    </a>
+
+    <a href="my-tasks.html" class="nav-link">
+      <span class="nav-icon">✓</span>
+      My Tasks
+    </a>
+
+    <a href="wallet.html" class="nav-link">
+      <span class="nav-icon">◈</span>
+      Wallet
+    </a>
+
+    <a href="withdraw.html" class="nav-link active">
+      <span class="nav-icon">↗</span>
+      Withdraw
+    </a>
+
+    <a href="referral.html" class="nav-link">
+      <span class="nav-icon">♧</span>
+      Referral
+    </a>
+
+    <div class="nav-section">Account</div>
+
+    <a href="profile.html" class="nav-link">
+      <span class="nav-icon">◯</span>
+      Profile
+    </a>
+
+    <a href="support.html" class="nav-link">
+      <span class="nav-icon">?</span>
+      Support
+    </a>
+
+    <a href="about.html" class="nav-link">
+      <span class="nav-icon">ⓘ</span>
+      About
+    </a>
+
+    <div class="nav-section">Website</div>
+
+    <a href="index.html" class="nav-link">
+      <span class="nav-icon">↩</span>
+      Back to Home
+    </a>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a href="login.html" class="nav-link">
+      <span class="nav-icon">⇥</span>
+      Logout
+    </a>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main">
+
+<header class="topbar">
+
+  <div class="topbar-left">
+    <button class="mobile-menu" onclick="openSidebar()">☰</button>
+    <div class="topbar-title">Withdraw Funds</div>
+  </div>
+
+  <div class="topbar-right">
+
+    <div class="notification">
+      ♢
+      <span class="notification-dot"></span>
+    </div>
+
+    <div class="profile-mini">
+
+      <div class="avatar">TU</div>
+
+      <div class="profile-info">
+        <div class="profile-name">Taskora User</div>
+        <div class="profile-role">Member</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+<section class="content">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <h1 class="page-title">Withdraw</h1>
+
+    <p class="page-subtitle">
+      Request a withdrawal from your available Taskora balance.
+    </p>
+
+  </div>
+
+  <!-- BALANCE -->
+
+  <div class="balance-strip">
+
+    <div class="balance-box primary">
+
+      <div class="balance-label">
+        Available Balance
+      </div>
+
+      <div class="balance-value">
+        $128.50
+      </div>
+
+      <div class="balance-help">
+        Available for withdrawal
+      </div>
+
+    </div>
+
+    <div class="balance-box">
+
+      <div class="balance-label">
+        Pending Earnings
+      </div>
+
+      <div class="balance-value">
+        $18.25
+      </div>
+
+      <div class="balance-help">
+        Not yet available
+      </div>
+
+    </div>
+
+    <div class="balance-box">
+
+      <div class="balance-label">
+        Total Withdrawn
+      </div>
+
+      <div class="balance-value">
+        $238.00
+      </div>
+
+      <div class="balance-help">
+        Successfully processed
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+
+  <div class="withdraw-grid">
+
+    <!-- FORM -->
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <div class="card-title">
+          Create Withdrawal Request
+        </div>
+
+        <div class="card-subtitle">
+          Enter your withdrawal details below.
+        </div>
+
+      </div>
+
+      <form class="form" id="withdrawForm">
+
+        <div class="form-group">
+
+          <label class="form-label">
+            Withdrawal Method
+          </label>
+
+          <div class="method-grid">
+
+            <div class="method">
+
+              <input
+                type="radio"
+                name="method"
+                id="bkash"
+                value="bKash"
+                checked
+              >
+
+              <label class="method-label" for="bkash">
+
+                <div class="method-icon">
+                  B
+                </div>
+
+                <div>
+                  <div class="method-name">
+                    bKash
+                  </div>
+
+                  <div class="method-description">
+                    Mobile wallet
+                  </div>
+                </div>
+
+              </label>
+
+            </div>
+
+            <div class="method">
+
+              <input
+                type="radio"
+                name="method"
+                id="nagad"
+                value="Nagad"
+              >
+
+              <label class="method-label" for="nagad">
+
+                <div class="method-icon">
+                  N
+                </div>
+
+                <div>
+                  <div class="method-name">
+                    Nagad
+                  </div>
+
+                  <div class="method-description">
+                    Mobile wallet
+                  </div>
+                </div>
+
+              </label>
+
+            </div>
+
+            <div class="method">
+
+              <input
+                type="radio"
+                name="method"
+                id="bank"
+                value="Bank"
+              >
+
+              <label class="method-label" for="bank">
+
+                <div class="method-icon">
+                  $
+                </div>
+
+                <div>
+                  <div class="method-name">
+                    Bank Transfer
+                  </div>
+
+                  <div class="method-description">
+                    Bank account
+                  </div>
+                </div>
+
+              </label>
+
+            </div>
+
+            <div class="method">
+
+              <input
+                type="radio"
+                name="method"
+                id="paypal"
+                value="PayPal"
+              >
+
+              <label class="method-label" for="paypal">
+
+                <div class="method-icon">
+                  P
+                </div>
+
+                <div>
+                  <div class="method-name">
+                    PayPal
+                  </div>
+
+                  <div class="method-description">
+                    Online payment
+                  </div>
+                </div>
+
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="form-group">
+
+          <label class="form-label" for="account">
+            Account / Wallet Number
+          </label>
+
+          <input
+            class="form-input"
+            type="text"
+            id="account"
+            placeholder="Enter your account or wallet number"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label class="form-label" for="amount">
+            Withdrawal Amount
+          </label>
+
+          <div class="amount-wrap">
+
+            <span class="currency">$</span>
+
+            <input
+              class="form-input amount-input"
+              type="number"
+              id="amount"
+              min="10"
+              max="128.50"
+              step="0.01"
+              placeholder="0.00"
+              required
+            >
+
+          </div>
+
+          <div class="available-row">
+
+            <span>
+              Minimum withdrawal: $10.00
+            </span>
+
+            <span class="use-all" onclick="useAll()">
+              Use available balance
+            </span>
+
+          </div>
+
+        </div>
+
+        <button
+          type="submit"
+          class="submit-btn"
+        >
+          Request Withdrawal
+        </button>
+
+      </form>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div>
+
+      <div class="side-card">
+
+        <div class="side-title">
+          Withdrawal Information
+        </div>
+
+        <div class="rule">
+          <span>Minimum amount</span>
+          <strong>$10.00</strong>
+        </div>
+
+        <div class="rule">
+          <span>Available balance</span>
+          <strong>$128.50</strong>
+        </div>
+
+        <div class="rule">
+          <span>Processing time</span>
+          <strong>1–3 days</strong>
+        </div>
+
+        <div class="rule">
+          <span>Platform fee</span>
+          <strong>$0.00</strong>
+        </div>
+
+      </div>
+
+      <div class="side-card">
+
+        <div class="side-title">
+          Important Information
+        </div>
+
+        <div class="info-box">
+          Make sure your account or wallet information is correct
+          before submitting a withdrawal request. Incorrect payment
+          information may delay processing.
+        </div>
+
+      </div>
+
+      <div class="side-card">
+
+        <div class="side-title">
+          Recent Activity
+        </div>
+
+        <a href="wallet.html" class="history-link">
+          <span>View wallet transactions</span>
+          <span>→</span>
+        </a>
+
+        <a href="my-tasks.html" class="history-link">
+          <span>View completed tasks</span>
+          <span>→</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<!-- CONFIRM MODAL -->
+
+<div class="modal-overlay" id="modal">
+
+  <div class="modal">
+
+    <div class="modal-icon">
+      ✓
+    </div>
+
+    <h2>Confirm Withdrawal</h2>
+
+    <p id="confirmText">
+      Please confirm your withdrawal request.
+    </p>
+
+    <div class="modal-actions">
+
+      <button
+        class="modal-btn cancel-btn"
+        onclick="closeModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="modal-btn confirm-btn"
+        onclick="confirmWithdrawal()"
+      >
+        Confirm Request
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* SIDEBAR */
+
+function openSidebar(){
+  document.getElementById("sidebar").classList.add("open");
+  document.getElementById("overlay").classList.add("show");
+}
+
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+/* USE ALL */
+
+function useAll(){
+
+  document.getElementById("amount").value = "128.50";
+
+}
+
+/* WITHDRAWAL */
+
+const form = document.getElementById("withdrawForm");
+const modal = document.getElementById("modal");
+const confirmText = document.getElementById("confirmText");
+
+form.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const account =
+    document.getElementById("account").value.trim();
+
+  const amount =
+    parseFloat(document.getElementById("amount").value);
+
+  const method =
+    document.querySelector(
+      'input[name="method"]:checked'
+    ).value;
+
+  if(!account){
+
+    alert("Please enter your account or wallet number.");
+    return;
+
+  }
+
+  if(isNaN(amount) || amount < 10){
+
+    alert("Minimum withdrawal amount is $10.00.");
+    return;
+
+  }
+
+  if(amount > 128.50){
+
+    alert("Withdrawal amount cannot exceed your available balance.");
+    return;
+
+  }
+
+  confirmText.textContent =
+    "You are requesting $" +
+    amount.toFixed(2) +
+    " through " +
+    method +
+    ". Please confirm your request.";
+
+  modal.classList.add("show");
+
+});
+
+function closeModal(){
+
+  modal.classList.remove("show");
+
+}
+
+function confirmWithdrawal(){
+
+  modal.classList.remove("show");
+
+  alert(
+    "Withdrawal request submitted successfully. " +
+    "Real withdrawal processing will be connected after Firebase/backend integration."
+  );
+
+  form.reset();
+
+}
+
+</script>
+
+</body>
+</html>
