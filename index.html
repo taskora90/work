@@ -11,90 +11,7 @@
     content="Taskora is a modern task and earning platform where users can complete tasks, build skills and manage their earnings."
   >
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #635bff;
-      --primary-dark: #4f46e5;
-      --secondary: #8b5cf6;
-      --dark: #111827;
-      --text: #374151;
-      --muted: #6b7280;
-      --light: #f8f9ff;
-      --white: #ffffff;
-      --border: #e5e7eb;
-      --success: #10b981;
-      --shadow: 0 15px 45px rgba(31, 41, 55, 0.08);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-      background: var(--white);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      font-family: inherit;
-    }
-
-    .container {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-    }
-
-    .navbar {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--dark);
-      letter-spacing: -0.5px;
-    }
-
+  
     .logo-icon {
       width: 42px;
       height: 42px;
@@ -906,670 +823,843 @@
         padding: 45px 22px;
       }
 
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-      .footer-brand {
-        grid-column: 1 / -1;
-      }
+:root{
+  --primary:#635bff;
+  --primary-dark:#4f46e5;
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#171927;
+  --muted:#777b8c;
+  --border:#ececf3;
+}
 
-      .footer-bottom {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
+html{
+  scroll-behavior:smooth;
+}
 
-    @media (max-width: 420px) {
+body{
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
 
-      .hero h1 {
-        font-size: 37px;
-      }
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:85px;
+}
 
-      .hero-buttons {
-        flex-direction: column;
-      }
+a{
+  text-decoration:none;
+  color:inherit;
+}
 
-      .primary-btn,
-      .secondary-btn {
-        width: 100%;
-      }
+button{
+  font-family:inherit;
+}
 
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+
+/* =========================
+   TOP HEADER
+========================= */
+
+.top-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  height:68px;
+  padding:0 18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  background:#ffffff;
+  border-bottom:1px solid var(--border);
+}
+
+.top-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-mark{
+  width:40px;
+  height:40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:13px;
+
+  color:#fff;
+  font-size:19px;
+  font-weight:800;
+
+  background:
+    linear-gradient(
+      135deg,
+      #635bff,
+      #8b5cf6
+    );
+
+  box-shadow:
+    0 8px 20px rgba(99,91,255,.22);
+}
+
+.top-logo strong{
+  display:block;
+  font-size:18px;
+  line-height:20px;
+}
+
+.top-logo small{
+  display:block;
+  margin-top:2px;
+
+  color:var(--muted);
+  font-size:10px;
+}
+
+.profile-btn{
+  width:40px;
+  height:40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+
+  background:#f1f0ff;
+  color:var(--primary);
+
+  font-size:18px;
+}
+
+
+/* =========================
+   BANNER
+========================= */
+
+.home-banner{
+  margin:16px;
+  padding:27px 22px;
+
+  min-height:205px;
+
+  position:relative;
+  overflow:hidden;
+
+  border-radius:24px;
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(255,255,255,.20),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #292354,
+      #635bff,
+      #8b5cf6
+    );
+
+  box-shadow:
+    0 15px 35px rgba(67,58,160,.22);
+}
+
+.home-banner::after{
+  content:"";
+
+  position:absolute;
+
+  width:150px;
+  height:150px;
+
+  right:-55px;
+  bottom:-65px;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.10);
+}
+
+.banner-content{
+  position:relative;
+  z-index:2;
+}
+
+.banner-content > span{
+  display:inline-block;
+
+  margin-bottom:10px;
+
+  color:#e9e7ff;
+  font-size:11px;
+  font-weight:700;
+}
+
+.banner-content h1{
+  color:#fff;
+
+  font-size:30px;
+  line-height:1.15;
+
+  margin-bottom:9px;
+}
+
+.banner-content h1 b{
+  color:#ddd9ff;
+}
+
+.banner-content p{
+  max-width:260px;
+
+  color:#dddcef;
+  font-size:12px;
+  line-height:1.6;
+
+  margin-bottom:17px;
+}
+
+.banner-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:39px;
+  padding:0 16px;
+
+  border-radius:11px;
+
+  background:#fff;
+  color:var(--primary);
+
+  font-size:12px;
+  font-weight:800;
+}
+
+
+/* =========================
+   BALANCE
+========================= */
+
+.balance-card{
+  margin:0 16px 20px;
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+
+  overflow:hidden;
+
+  background:var(--card);
+
+  border:1px solid var(--border);
+  border-radius:18px;
+
+  box-shadow:
+    0 8px 25px rgba(30,32,50,.05);
+}
+
+.balance-item{
+  min-width:0;
+
+  padding:15px 8px;
+
+  text-align:center;
+
+  border-right:1px solid var(--border);
+}
+
+.balance-item:last-child{
+  border-right:none;
+}
+
+.balance-item span{
+  display:block;
+
+  margin-bottom:5px;
+
+  color:var(--muted);
+  font-size:10px;
+}
+
+.balance-item strong{
+  display:block;
+
+  color:var(--text);
+  font-size:15px;
+  font-weight:800;
+}
+
+
+/* =========================
+   COMMON SECTION
+========================= */
+
+.quick-section,
+.package-preview,
+.task-preview{
+  padding:0 16px;
+  margin-bottom:25px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:13px;
+}
+
+.section-title h2{
+  font-size:17px;
+  font-weight:800;
+}
+
+.section-title a{
+  color:var(--primary);
+  font-size:11px;
+  font-weight:700;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.quick-card{
+  min-height:91px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:8px;
+
+  background:#fff;
+
+  border:1px solid var(--border);
+  border-radius:16px;
+
+  box-shadow:
+    0 6px 18px rgba(30,32,50,.04);
+
+  transition:.2s;
+}
+
+.quick-card:active{
+  transform:scale(.97);
+}
+
+.quick-icon{
+  width:39px;
+  height:39px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+
+  background:#f0efff;
+  color:var(--primary);
+
+  font-size:18px;
+}
+
+.quick-card span{
+  color:var(--text);
+  font-size:11px;
+  font-weight:700;
+}
+
+
+/* =========================
+   PACKAGE
+========================= */
+
+.package-card{
+  padding:19px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #24204d,
+      #635bff
+    );
+
+  color:#fff;
+
+  box-shadow:
+    0 12px 28px rgba(79,70,229,.18);
+}
+
+.package-label{
+  display:block;
+
+  margin-bottom:5px;
+
+  color:#cfcdf0;
+  font-size:9px;
+  font-weight:700;
+}
+
+.package-card h3{
+  font-size:15px;
+  margin-bottom:5px;
+}
+
+.package-card p{
+  max-width:190px;
+
+  color:#d8d7e9;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.package-btn{
+  flex-shrink:0;
+
+  padding:10px 12px;
+
+  border-radius:10px;
+
+  background:#fff;
+  color:var(--primary);
+
+  font-size:10px;
+  font-weight:800;
+}
+
+
+/* =========================
+   TASK PREVIEW
+========================= */
+
+.empty-task{
+  padding:28px 18px;
+
+  text-align:center;
+
+  background:#fff;
+
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+
+.empty-icon{
+  width:48px;
+  height:48px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin:0 auto 10px;
+
+  border-radius:15px;
+
+  background:#f0efff;
+
+  font-size:21px;
+}
+
+.empty-task h3{
+  margin-bottom:5px;
+
+  font-size:14px;
+}
+
+.empty-task p{
+  max-width:280px;
+
+  margin:auto;
+
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+.download-card{
+  margin:0 16px 25px;
+  padding:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+
+  border-radius:19px;
+
+  background:#fff;
+
+  border:1px solid var(--border);
+}
+
+.download-card span{
+  color:var(--primary);
+  font-size:10px;
+  font-weight:800;
+}
+
+.download-card h2{
+  margin:4px 0;
+
+  font-size:14px;
+}
+
+.download-card p{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
+}
+
+.download-card a{
+  flex-shrink:0;
+
+  padding:10px 12px;
+
+  border-radius:10px;
+
+  background:var(--primary);
+  color:#fff;
+
+  font-size:10px;
+  font-weight:800;
+}
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:0;
+
+  z-index:2000;
+
+  height:72px;
+
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+
+  background:#fff;
+
+  border-top:1px solid var(--border);
+
+  box-shadow:
+    0 -8px 25px rgba(20,20,40,.07);
+}
+
+.bottom-nav a{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  gap:4px;
+
+  color:#9295a5;
+
+  font-size:19px;
+}
+
+.bottom-nav a small{
+  font-size:9px;
+  font-weight:700;
+}
+
+.bottom-nav a.active{
+  color:var(--primary);
+}
+
+.bottom-nav a.active span{
+  transform:translateY(-1px);
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width:700px){
+
+  body{
+    max-width:600px;
+    margin:auto;
+    background:#eef0f7;
+  }
+
+  .top-header{
+    max-width:600px;
+    left:50%;
+    transform:translateX(-50%);
+  }
+
+  .bottom-nav{
+    max-width:600px;
+    left:50%;
+    right:auto;
+    width:100%;
+    transform:translateX(-50%);
+  }
+
+}
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
-
-  <header>
-    <div class="container navbar">
-
-      <a href="index.html" class="logo">
-        <span class="logo-icon">T</span>
-        <span>Taskora</span>
-      </a>
-
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="tasks.html">Tasks</a>
-        <a href="about.html">About</a>
-        <a href="support.html">Support</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a href="login.html" class="login-btn">Login</a>
-        <a href="register.html" class="register-btn">Create Account</a>
-        <button class="menu-btn" id="menuBtn">☰</button>
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <div class="top-logo">
+      <div class="logo-mark">T</div>
+      <div>
+        <strong>Taskora</strong>
+        <small>কাজ করুন, আয় করুন</small>
       </div>
-
     </div>
+
+    <a href="profile.html" class="profile-btn">👤</a>
   </header>
 
 
-  <!-- =========================
-       HERO
-  ========================== -->
-
-  <main>
-
-    <section class="hero">
-
-      <div class="container hero-grid">
-
-        <div class="hero-content">
-
-          <div class="hero-badge">
-            <span></span>
-            A smarter way to work online
-          </div>
-
-          <h1>
-            Complete tasks.
-            <span>Build skills.</span>
-            Earn.
-          </h1>
-
-          <p class="hero-text">
-            Welcome to Taskora — a modern platform where you can
-            discover available tasks, complete meaningful work,
-            build your skills and manage your earnings from one place.
-          </p>
-
-          <div class="hero-buttons">
-
-            <a href="register.html" class="primary-btn">
-              Get Started
-            </a>
-
-            <a href="tasks.html" class="secondary-btn">
-              Explore Tasks
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <div class="hero-visual">
-
-          <div class="floating-card one">
-            <span class="floating-icon">✓</span>
-            Task Completed
-          </div>
-
-          <div class="dashboard-card">
-
-            <div class="dashboard-top">
-              <div class="dashboard-title">
-                Your Overview
-              </div>
-
-              <div class="online">
-                <i></i>
-                Active
-              </div>
-            </div>
-
-            <div class="balance-box">
-
-              <div class="balance-label">
-                Available Balance
-              </div>
-
-              <div class="balance-value">
-                $128.50
-              </div>
-
-              <div class="balance-bottom">
-                <span>Total Earnings</span>
-                <span>$384.75</span>
-              </div>
-
-            </div>
-
-            <div class="mini-stats">
-
-              <div class="mini-stat">
-                <div class="mini-stat-label">
-                  Completed Tasks
-                </div>
-
-                <div class="mini-stat-value">
-                  48
-                </div>
-              </div>
-
-              <div class="mini-stat">
-                <div class="mini-stat-label">
-                  Pending Tasks
-                </div>
-
-                <div class="mini-stat-value">
-                  06
-                </div>
-              </div>
-
-              <div class="mini-stat">
-                <div class="mini-stat-label">
-                  This Month
-                </div>
-
-                <div class="mini-stat-value">
-                  $96.20
-                </div>
-              </div>
-
-              <div class="mini-stat">
-                <div class="mini-stat-label">
-                  Referral Bonus
-                </div>
-
-                <div class="mini-stat-value">
-                  $22.50
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="floating-card two">
-            <span class="floating-icon">↗</span>
-            New earning added
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         TRUST STRIP
-    ========================== -->
-
-    <section class="trust-strip">
-
-      <div class="container trust-content">
-
-        <span>✓ Secure Platform</span>
-        <span>✓ Simple Workflow</span>
-        <span>✓ Task Management</span>
-        <span>✓ Transparent Balance</span>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         FEATURES
-    ========================== -->
-
-    <section class="section features">
-
-      <div class="container">
-
-        <div class="section-header">
-
-          <span class="section-label">
-            Platform Features
-          </span>
-
-          <h2>
-            Everything you need in one platform
-          </h2>
-
-          <p>
-            Taskora brings your tasks, earnings, wallet,
-            referrals and account management together.
-          </p>
-
-        </div>
-
-
-        <div class="feature-grid">
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              ✓
-            </div>
-
-            <h3>
-              Available Tasks
-            </h3>
-
-            <p>
-              Explore available tasks and choose opportunities
-              that match your skills and interests.
-            </p>
-
-          </div>
-
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              $
-            </div>
-
-            <h3>
-              Earnings & Wallet
-            </h3>
-
-            <p>
-              Keep track of completed-task earnings,
-              available balance and transaction history.
-            </p>
-
-          </div>
-
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              ↗
-            </div>
-
-            <h3>
-              Referral Program
-            </h3>
-
-            <p>
-              Invite others through your referral system
-              and monitor your referral activity.
-            </p>
-
-          </div>
-
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              ◉
-            </div>
-
-            <h3>
-              Personal Dashboard
-            </h3>
-
-            <p>
-              View your account activity, task progress,
-              earnings and important account information.
-            </p>
-
-          </div>
-
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              →
-            </div>
-
-            <h3>
-              Simple Withdrawals
-            </h3>
-
-            <p>
-              Manage withdrawal requests and view your
-              transaction status from one dedicated page.
-            </p>
-
-          </div>
-
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              ?
-            </div>
-
-            <h3>
-              Support
-            </h3>
-
-            <p>
-              Get help with your account, tasks,
-              payments and other platform-related questions.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         HOW IT WORKS
-    ========================== -->
-
-    <section class="section">
-
-      <div class="container">
-
-        <div class="section-header">
-
-          <span class="section-label">
-            How It Works
-          </span>
-
-          <h2>
-            Start your journey in four simple steps
-          </h2>
-
-          <p>
-            A simple workflow designed to keep your experience
-            clear and easy to understand.
-          </p>
-
-        </div>
-
-
-        <div class="steps">
-
-          <div class="step">
-
-            <div class="step-number">
-              01
-            </div>
-
-            <h3>
-              Create Account
-            </h3>
-
-            <p>
-              Register your account and complete your basic profile.
-            </p>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              02
-            </div>
-
-            <h3>
-              Find Tasks
-            </h3>
-
-            <p>
-              Browse available opportunities from the task section.
-            </p>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              03
-            </div>
-
-            <h3>
-              Complete Work
-            </h3>
-
-            <p>
-              Follow the task instructions and submit your work.
-            </p>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              04
-            </div>
-
-            <h3>
-              Track Earnings
-            </h3>
-
-            <p>
-              Monitor approved earnings through your wallet.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         STATS
-    ========================== -->
-
-    <section class="stats-section">
-
-      <div class="container">
-
-        <div class="stats-box">
-
-          <div class="stat">
-            <h3>24/7</h3>
-            <p>Platform Access</p>
-          </div>
-
-          <div class="stat">
-            <h3>6+</h3>
-            <p>Core Sections</p>
-          </div>
-
-          <div class="stat">
-            <h3>1</h3>
-            <p>Unified Dashboard</p>
-          </div>
-
-          <div class="stat">
-            <h3>∞</h3>
-            <p>Growth Potential</p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CTA
-    ========================== -->
-
-    <section class="cta-section">
-
-      <div class="container">
-
-        <div class="cta-box">
-
-          <h2>
-            Ready to get started?
-          </h2>
-
-          <p>
-            Create your Taskora account and explore the platform.
-            Your journey starts with your first task.
-          </p>
-
-          <a href="register.html" class="primary-btn">
-            Create Your Account
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-grid">
-
-        <div class="footer-brand">
-
-          <div class="logo">
-            <span class="logo-icon">T</span>
-            <span style="color:white;">Taskora</span>
-          </div>
-
-          <p>
-            A modern task and earning platform designed to
-            connect users with online work opportunities,
-            task management and account tools.
-          </p>
-
-        </div>
-
-
-        <div>
-
-          <div class="footer-title">
-            Platform
-          </div>
-
-          <div class="footer-links">
-            <a href="tasks.html">Available Tasks</a>
-            <a href="my-tasks.html">My Tasks</a>
-            <a href="wallet.html">Wallet</a>
-            <a href="withdraw.html">Withdraw</a>
-          </div>
-
-        </div>
-
-
-        <div>
-
-          <div class="footer-title">
-            Account
-          </div>
-
-          <div class="footer-links">
-            <a href="login.html">Login</a>
-            <a href="register.html">Create Account</a>
-            <a href="profile.html">Profile</a>
-            <a href="referral.html">Referral</a>
-          </div>
-
-        </div>
-
-
-        <div>
-
-          <div class="footer-title">
-            Company
-          </div>
-
-          <div class="footer-links">
-            <a href="about.html">About</a>
-            <a href="support.html">Support</a>
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="footer-bottom">
-
-        <span>
-          © 2026 Taskora. All Rights Reserved.
-        </span>
-
-        <span>
-          Built for a better online work experience.
-        </span>
-
-      </div>
+  <!-- BANNER / SLIDER -->
+  <section class="home-banner">
+    <div class="banner-content">
+      <span>✨ Taskora</span>
+
+      <h1>
+        কাজ করুন<br>
+        <b>আয় করুন</b>
+      </h1>
+
+      <p>
+        ভিডিও টাস্ক সম্পন্ন করে সহজেই আয় করুন।
+      </p>
+
+      <a href="tasks.html" class="banner-btn">
+        কাজ শুরু করুন →
+      </a>
+    </div>
+  </section>
+
+
+  <!-- BALANCE -->
+  <section class="balance-card">
+
+    <div class="balance-item">
+      <span>ব্যক্তিগত টাকা</span>
+      <strong>৳০</strong>
+    </div>
+
+    <div class="balance-item">
+      <span>আয় টাকা</span>
+      <strong>৳০</strong>
+    </div>
+
+    <div class="balance-item">
+      <span>মোট আয়</span>
+      <strong>৳০</strong>
+    </div>
+
+  </section>
+
+
+  <!-- QUICK ACTIONS -->
+  <section class="quick-section">
+
+    <div class="section-title">
+      <h2>দ্রুত সেবা</h2>
+    </div>
+
+    <div class="quick-grid">
+
+      <a href="recharge.html" class="quick-card">
+        <div class="quick-icon">💳</div>
+        <span>রিচার্জ</span>
+      </a>
+
+      <a href="withdraw.html" class="quick-card">
+        <div class="quick-icon">💸</div>
+        <span>উত্তোলন</span>
+      </a>
+
+      <a href="lucky-draw.html" class="quick-card">
+        <div class="quick-icon">🎁</div>
+        <span>লাকি ড্র</span>
+      </a>
+
+      <a href="referral.html" class="quick-card">
+        <div class="quick-icon">👥</div>
+        <span>আমন্ত্রণ</span>
+      </a>
+
+      <a href="messages.html" class="quick-card">
+        <div class="quick-icon">💬</div>
+        <span>বার্তা কেন্দ্র</span>
+      </a>
+
+      <a href="download.html" class="quick-card">
+        <div class="quick-icon">📲</div>
+        <span>ডাউনলোড</span>
+      </a>
 
     </div>
 
-  </footer>
+  </section>
 
 
-  <!-- =========================
-       MOBILE MENU
-  ========================== -->
+  <!-- ACTIVE PACKAGE -->
+  <section class="package-preview">
+
+    <div class="section-title">
+      <h2>আমার প্যাকেজ</h2>
+
+      <a href="packages.html">
+        সব দেখুন →
+      </a>
+    </div>
+
+    <div class="package-card">
+
+      <div>
+        <span class="package-label">বর্তমান প্যাকেজ</span>
+
+        <h3>কোনো প্যাকেজ সক্রিয় নেই</h3>
+
+        <p>
+          প্যাকেজ সক্রিয় করে আপনার দৈনিক কাজ শুরু করুন।
+        </p>
+      </div>
+
+      <a href="packages.html" class="package-btn">
+        প্যাকেজ দেখুন
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- TASK PREVIEW -->
+  <section class="task-preview">
+
+    <div class="section-title">
+      <h2>আজকের কাজ</h2>
+
+      <a href="tasks.html">
+        সব কাজ →
+      </a>
+    </div>
+
+    <div class="empty-task">
+
+      <div class="empty-icon">🎬</div>
+
+      <h3>আজকের কাজ এখানে দেখাবে</h3>
+
+      <p>
+        প্যাকেজ সক্রিয় করার পর আপনার ভিডিও টাস্ক এখানে পাওয়া যাবে।
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- DOWNLOAD -->
+  <section class="download-card">
+
+    <div>
+      <span>📱 Taskora App</span>
+
+      <h2>মোবাইল অ্যাপ ডাউনলোড করুন</h2>
+
+      <p>
+        আরও সহজে Taskora ব্যবহার করতে Android অ্যাপ ডাউনলোড করুন।
+      </p>
+    </div>
+
+    <a href="download.html">
+      ডাউনলোড
+    </a>
+
+  </section>
+
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+
+    <a href="index.html" class="active">
+      <span>⌂</span>
+      <small>হোম</small>
+    </a>
+
+    <a href="tasks.html">
+      <span>▶</span>
+      <small>টাস্ক</small>
+    </a>
+
+    <a href="referral.html">
+      <span>👥</span>
+      <small>টিম</small>
+    </a>
+
+    <a href="packages.html">
+      <span>💎</span>
+      <small>প্যাকেজ</small>
+    </a>
+
+    <a href="profile.html">
+      <span>👤</span>
+      <small>প্রোফাইল</small>
+    </a>
+
+  </nav>
+
 
   <script>
-
-    const menuBtn = document.getElementById("menuBtn");
-
-    menuBtn.addEventListener("click", function () {
-
-      const nav = document.querySelector(".nav-links");
-
-      if (nav.style.display === "flex") {
-
-        nav.style.display = "none";
-
-      } else {
-
-        nav.style.display = "flex";
-        nav.style.position = "absolute";
-        nav.style.top = "68px";
-        nav.style.left = "4%";
-        nav.style.right = "4%";
-        nav.style.padding = "12px";
-        nav.style.flexDirection = "column";
-        nav.style.alignItems = "stretch";
-        nav.style.background = "white";
-        nav.style.border = "1px solid #e5e7eb";
-        nav.style.borderRadius = "14px";
-        nav.style.boxShadow = "0 15px 40px rgba(0,0,0,0.08)";
-
-      }
-
-    });
-
+    // Home page initialization
+    console.log("Taskora Home Loaded");
   </script>
 
-</body>
+  </body>
 </html>
